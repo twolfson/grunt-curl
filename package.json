@@ -41,5 +41,8 @@
     "file",
     "url",
     "uri"
-  ]
+  ],
+  "dependencies": {
+    "request": "~2.12.0"
+  }
 }

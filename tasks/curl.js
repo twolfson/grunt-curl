@@ -6,7 +6,8 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt) {
+var request = require('request');
+module.exports = function (grunt) {
 
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/gruntjs/grunt/blob/master/docs/toc.md
@@ -15,18 +16,26 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('curl', 'Your task description goes here.', function() {
+  grunt.registerMultiTask('curl', 'Your task description goes here.', function () {
     // Collect the filepaths we need
     var file = this.file,
         data = this.data,
         src = file.src,
-        srcFiles = grunt.file.expand(src),
-        dest = file.dest;
+        srcFiles = src,
+        dest = file.dest,
+        callback = this.async();
+
+    // Upcast the src to an array
+    if (!Array.isArray(srcFiles)) {
+      srcFiles = [src];
+    }
+
+    // Asynchronously fetch the files in parallel
+    grunt.async.map(srcFiles, grunt.helper.bind(grunt, 'curl'));
 
     // Concatenate the srcFiles, process the blob through our helper,
     var separator = data.separator || '\n',
-        srcBlob = grunt.helper('concat', srcFiles, {separator: separator}),
-        content = grunt.helper('curl', srcBlob);
+        content = curlFiles.join(separator);
 
     // Write out the content
     grunt.file.write(dest, content);
@@ -42,8 +51,6 @@ module.exports = function(grunt) {
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('curl', function (content) {
-    return content;
-  });
+  grunt.registerHelper('curl', request.get);
 
 };
