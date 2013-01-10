@@ -21,36 +21,54 @@ module.exports = function (grunt) {
     var file = this.file,
         data = this.data,
         src = file.src,
-        srcFiles = src,
         dest = file.dest,
-        callback = this.async();
+        done = this.async(),
+        that = this;
 
-    // Upcast the src to an array
+    // Upcast the srcFiles to an array
+    var srcFiles = src;
     if (!Array.isArray(srcFiles)) {
       srcFiles = [src];
     }
 
     // Asynchronously fetch the files in parallel
-    grunt.async.map(srcFiles, grunt.helper.bind(grunt, 'curl'));
+    var async = grunt.utils.async;
+    async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
 
-    // Concatenate the srcFiles, process the blob through our helper,
-    var separator = data.separator || '\n',
-        content = curlFiles.join(separator);
+    function curlResultFn(err, files) {
+      // If there is an error, fail
+      if (err) {
+        return grunt.fail.fatal(err);
+      }
 
-    // Write out the content
-    grunt.file.write(dest, content);
+      // Concatenate the srcFiles, process the blob through our helper,
+      var separator = data.separator || '\n',
+          content = files.join(separator);
 
-    // Fail task if errors were logged.
-    if (this.errorCount) { return false; }
+      // Write out the content
+      grunt.file.write(dest, content);
 
-    // Otherwise, print a success message.
-    grunt.log.writeln('File "' + this.file.dest + '" created.');
+      // Fail task if errors were logged.
+      if (that.errorCount) { return false; }
+
+      // Otherwise, print a success message.
+      grunt.log.writeln('File "' + dest + '" created.');
+
+      // Callback
+      done();
+    }
   });
 
   // ==========================================================================
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('curl', request.get);
+  grunt.registerHelper('curl', function (url, cb) {
+    // Request the url
+    request.get(url, function (err, res, body) {
+      // Callback with the error and body
+      cb(err, body);
+    });
+  });
 
 };
