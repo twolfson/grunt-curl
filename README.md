@@ -15,7 +15,31 @@ grunt.loadNpmTasks('grunt-curl');
 [getting_started]: https://github.com/gruntjs/grunt/blob/master/docs/getting_started.md
 
 ## Documentation
-_(Coming soon)_
+`grunt-curl` retrieves data via [request][request]'s GET method and writes it to file.
+
+We register a grunt task
+```js
+grunt.initConfig({
+curl: {
+  // Short format (dest: src)
+  'location/to/download/file.js': 'http://files.com/path/to/file.js',
+
+  // Long format
+  long: {
+    src: 'http://files.com/path/to/file.js',
+    dest: 'location/to/download/file.js'
+  }
+}):
+```
+
+and a grunt helper
+```js
+grunt.helper('curl', url, function handleData (err, content) {
+  // Handle error and use content
+});
+```
+
+[request]: https://github.com/mikeal/request
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`.
