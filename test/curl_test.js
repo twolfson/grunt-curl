@@ -20,16 +20,25 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+var fs = require('fs');
 exports['curl'] = {
   setUp: function(done) {
     // setup here
     done();
   },
-  'multiTask': function(test) {
+  'js': function(test) {
     test.expect(1);
     // tests here
     var expectedContent = grunt.file.read('expected/file.js'),
         actualContent = grunt.file.read('actual/file.js');
+    test.equal(actualContent, expectedContent, 'should return the correct value.');
+    test.done();
+  },
+  'zip': function(test) {
+    test.expect(1);
+    // tests here
+    var expectedContent = fs.readFileSync('expected/file.zip', 'binary'),
+        actualContent = fs.readFileSync('actual/file.zip', 'binary');
     test.equal(actualContent, expectedContent, 'should return the correct value.');
     test.done();
   }
