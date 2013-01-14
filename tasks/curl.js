@@ -6,7 +6,9 @@
  * Licensed under the MIT license.
  */
 
-var request = require('request');
+var fs = require('fs'),
+    path = require('path'),
+    request = require('request');
 module.exports = function (grunt) {
 
   // Please see the grunt documentation for more information regarding task and
@@ -46,7 +48,9 @@ module.exports = function (grunt) {
           content = files.join(separator);
 
       // Write out the content
-      grunt.file.write(dest, content);
+      var destDir = path.dirname(dest);
+      grunt.file.mkdir(destDir);
+      fs.writeFileSync(dest, content, 'binary');
 
       // Fail task if errors were logged.
       if (that.errorCount) { return false; }
@@ -65,7 +69,7 @@ module.exports = function (grunt) {
 
   grunt.registerHelper('curl', function (url, cb) {
     // Request the url
-    request.get(url, function (err, res, body) {
+    request.get({'url': url, 'encoding': 'binary'}, function (err, res, body) {
       // Callback with the error and body
       cb(err, body);
     });
