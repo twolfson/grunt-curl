@@ -17,17 +17,58 @@ grunt.loadNpmTasks('grunt-curl');
 ## Documentation
 `grunt-curl` retrieves data via [request][request]'s GET method and writes it to file.
 
-We register a grunt task
+We register two grunt tasks
 ```js
 grunt.initConfig({
-curl: {
-  // Short format (dest: src)
-  'location/to/download/file.js': 'http://files.com/path/to/file.js',
+  // Grab single files
+  curl: {
+    // Short format (dest: src)
+    'location/to/download/file.js': 'http://files.com/path/to/file.js',
 
-  // Long format
-  long: {
-    src: 'http://files.com/path/to/file.js',
-    dest: 'location/to/download/file.js'
+    // Long format
+    long: {
+      src: 'http://files.com/path/to/file.js',
+      dest: 'location/to/download/file.js'
+    }
+  },
+  // Grab multiple files
+  'curl-dir': {
+    // Short format (dest folder: [src1, src2])
+    // These will be saved as 'location/to/save/files/file1.js'
+    //    and 'location/to/save/files/file2.js'
+    'location/to/save/files': [
+      'http://files.com/path/to/file1.js',
+      'http://generic.com/scripts/file2.js'
+    ],
+
+    // Long format
+    long: {
+      src: [
+        'http://files.com/path/to/file1.js',
+        'http://files.com/path/to/file2.js'
+      ],
+      dest: 'location/to/save/files'
+    },
+
+    // src files will expand to same file1.js and file2.js as long format
+    braceExpansion: {
+      src: ['http://files.com/path/to/{file1,file2}.js'],
+      dest: 'location/to/save/files'
+    },
+
+    // Custom filepaths
+    // This will save file1.js to location/to/save/files/path/to/file1.js
+    //    and file2.js to location/to/save/files/scripts/file2.js
+    customFilepaths: {
+      src: [
+        'http://files.com/path/to/file1.js',
+        'http://generic.com/scripts/file2.js'
+      ],
+      router: function (url) {
+        return url.replace('http://files.com/', '').replace('http://generic.com/', '');
+      },
+      dest: 'location/to/save/files'
+    }
   }
 }):
 ```
