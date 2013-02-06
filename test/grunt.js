@@ -19,12 +19,12 @@ module.exports = function (grunt) {
           'http://cdnjs.cloudflare.com/ajax/libs/cookiejar/0.5/cookiejar.js'
         ],
         dest: 'actual/multi'
-      // },
-      // braceExpansion: {
-      //   src: [
-      //     'http://cdnjs.cloudflare.com/ajax/libs/{labjs/2.0.3/LAB.min,cookiejar/0.5/cookiejar}.js'
-      //   ],
-      //   dest: 'actual/braceExpansion'
+      },
+      braceExpansion: {
+        src: [
+          'http://cdnjs.cloudflare.com/ajax/libs/{labjs/2.0.3/LAB.min,cookiejar/0.5/cookiejar}.js'
+        ],
+        dest: 'actual/braceExpansion'
       // },
       // router: {
       //   src: [

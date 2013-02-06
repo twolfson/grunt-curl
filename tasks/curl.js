@@ -80,6 +80,15 @@ module.exports = function (grunt) {
       srcFiles = [src];
     }
 
+    // Iterate over the array and expand the braces
+    var minimatch = grunt.file.glob.minimatch,
+        braceExpand = minimatch.braceExpand;
+    srcFiles = srcFiles.reduce(function expandSrcFiles (retArr, srcFile) {
+      var srcFileArr = braceExpand(srcFile);
+      retArr = retArr.concat(srcFileArr);
+      return retArr;
+    }, []);
+
     // Asynchronously fetch the files in parallel
     var async = grunt.utils.async;
     async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
