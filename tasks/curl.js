@@ -18,7 +18,7 @@ module.exports = function (grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('curl', 'Your task description goes here.', function () {
+  grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
     // Collect the filepaths we need
     var file = this.file,
         data = this.data,
@@ -51,6 +51,57 @@ module.exports = function (grunt) {
       var destDir = path.dirname(dest);
       grunt.file.mkdir(destDir);
       fs.writeFileSync(dest, content, 'binary');
+
+      // Fail task if errors were logged.
+      if (that.errorCount) { return false; }
+
+      // Otherwise, print a success message.
+      grunt.log.writeln('File "' + dest + '" created.');
+
+      // Callback
+      done();
+    }
+  });
+
+  var defaultRouter = path.basename;
+  grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
+    // Collect the filepaths we need
+    var file = this.file,
+        src = file.src,
+        dest = file.dest,
+        data = this.data,
+        router = data.router || defaultRouter,
+        done = this.async(),
+        that = this;
+
+    // Upcast the srcFiles to an array
+    var srcFiles = src;
+    if (!Array.isArray(srcFiles)) {
+      srcFiles = [src];
+    }
+
+    // Asynchronously fetch the files in parallel
+    var async = grunt.utils.async;
+    async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
+
+    function curlResultFn(err, files) {
+      // If there is an error, fail
+      if (err) {
+        return grunt.fail.fatal(err);
+      }
+
+      // Iterate over each of the files
+      files.forEach(function curlWriteFiles (content, i) {
+        // Determine the destination
+        var srcFile = srcFiles[i],
+            destShortPath = router(srcFile),
+            destPath = path.join(dest, destShortPath);
+
+        // Write out the content
+        var destDir = path.dirname(destPath);
+        grunt.file.mkdir(destDir);
+        fs.writeFileSync(destPath, content, 'binary');
+      });
 
       // Fail task if errors were logged.
       if (that.errorCount) { return false; }

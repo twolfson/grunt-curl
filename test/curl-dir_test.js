@@ -21,7 +21,7 @@ var grunt = require('grunt');
 */
 
 var fs = require('fs');
-exports['curl'] = {
+exports['curl-dir'] = {
   setUp: function(done) {
     // setup here
     done();
@@ -30,11 +30,11 @@ exports['curl'] = {
     test.expect(2);
     // tests here
     var expectedLabContent = grunt.file.read('expected/file.js'),
-        actualLabContent = grunt.file.read('actual/nested/LAB.min.js');
+        actualLabContent = grunt.file.read('actual/multi/LAB.min.js');
     test.equal(actualLabContent, expectedLabContent, 'should return the correct value for LAB.min.js.');
 
     var expectedCookiejarContent = grunt.file.read('expected/cookiejar.js'),
-        actualCookiejarContent = grunt.file.read('actual/nested/cookiejar.js');
+        actualCookiejarContent = grunt.file.read('actual/multi/cookiejar.js');
     test.equal(actualLabContent, expectedLabContent, 'should return the correct value for cookiejar.js.');
 
     test.done();
