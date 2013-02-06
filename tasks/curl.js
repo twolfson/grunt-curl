@@ -90,15 +90,19 @@ module.exports = function (grunt) {
         return grunt.fail.fatal(err);
       }
 
+      // Determine the destinations
+      var destArr = srcFiles.map(function getDest (srcFile) {
+            // Route the file, append it to dest, and return
+            var filepath = router(srcFile),
+                retStr = path.join(dest, filepath);
+            return retStr;
+          });
+
       // Iterate over each of the files
       files.forEach(function curlWriteFiles (content, i) {
-        // Determine the destination
-        var srcFile = srcFiles[i],
-            destShortPath = router(srcFile),
-            destPath = path.join(dest, destShortPath);
-
         // Write out the content
-        var destDir = path.dirname(destPath);
+        var destPath = destArr[i],
+            destDir = path.dirname(destPath);
         grunt.file.mkdir(destDir);
         fs.writeFileSync(destPath, content, 'binary');
       });
@@ -107,7 +111,7 @@ module.exports = function (grunt) {
       if (that.errorCount) { return false; }
 
       // Otherwise, print a success message.
-      grunt.log.writeln('File "' + dest + '" created.');
+      grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
 
       // Callback
       done();
