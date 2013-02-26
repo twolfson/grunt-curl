@@ -8,6 +8,7 @@
 
 var fs = require('fs'),
     path = require('path'),
+    assert = require('assert'),
     request = require('request');
 module.exports = function (grunt) {
 
@@ -20,8 +21,9 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
     // TODO: Modularize this to proxy registerMultiTask and perform fallbacks
+    // TODO: This orig is definitely not safe -- do expansion found on https://github.com/gruntjs/grunt/blob/0.3-stable/lib/grunt/task.js#L80-L100
     // Fallback this.file and grunt.utils
-    this.file = this.file || this.files[0];
+    this.file = this.file || this.files[0].orig;
     grunt.utils = grunt.utils || grunt.util;
 
     // Collect the filepaths we need
