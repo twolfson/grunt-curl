@@ -37,14 +37,20 @@ module.exports = function (grunt) {
         dest: 'actual/router'
       }
     },
-    test: {
+    nodeunit: {
       all: '*_test.js'
     }
   });
 
+  // Load in grunt-contrib for testing against
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // Load local tasks.
   grunt.loadTasks('../tasks');
 
+  // Alias nodeunit as test
+  grunt.registerTask('test', ['nodeunit']);
+
   // Run project task then tests.
-  grunt.registerTask('default', 'curl curl-dir test');
+  grunt.registerTask('default', ['curl', 'curl-dir', 'test']);
 };

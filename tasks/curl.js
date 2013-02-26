@@ -131,6 +131,29 @@ module.exports = function (grunt) {
   // HELPERS
   // ==========================================================================
 
+  // TODO: Abstract into a node_module for easier patching
+  // Set up storage for helpers
+  var helpers = {};
+
+  // Fallback helper helper
+  function helper(name) {
+    // Look up and assert the helper exists
+    var helper = helpers[name];
+    assert(helper, 'GRUNT HELPER: "' + name + '" could not be found.');
+
+    // Call the helper with the arguments
+    var args = [].slice.call(arguments, 1);
+    return helper.apply(this, args);
+  }
+  grunt.helper = grunt.helper || helper;
+
+  // Fallback registerHelper
+  function registerHelper(name, fn) {
+    helpers[name] = fn;
+  }
+  grunt.registerHelper = grunt.registerHelper || registerHelper;
+
+  // Register our curl helper
   grunt.registerHelper('curl', function (url, cb) {
     // Request the url
     request.get({'url': url, 'encoding': 'binary'}, function (err, res, body) {
