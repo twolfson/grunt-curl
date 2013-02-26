@@ -151,12 +151,12 @@ module.exports = function (grunt) {
   // Fallback helper helper
   function helper(name) {
     // Look up and assert the helper exists
-    var helper = helpers[name];
-    assert(helper, 'GRUNT HELPER: "' + name + '" could not be found.');
+    var helperFn = helpers[name];
+    assert(helperFn, 'GRUNT HELPER: "' + name + '" could not be found.');
 
     // Call the helper with the arguments
     var args = [].slice.call(arguments, 1);
-    return helper.apply(this, args);
+    return helperFn.apply(this, args);
   }
   grunt.helper = grunt.helper || helper;
 
