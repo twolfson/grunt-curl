@@ -43,13 +43,17 @@ module.exports = function (grunt) {
   });
 
   // Go up one directory for proper resolutions
+  // TODO: Grunt makes too many assumptions about folder layout =_=
   process.chdir('..');
 
   // Load in grunt-contrib for testing against
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
+  // Come back to test directory
+  process.chdir(__dirname);
+
   // Load local tasks.
-  grunt.loadTasks('tasks');
+  grunt.loadTasks('../tasks');
 
   // Alias nodeunit as test
   grunt.registerTask('test', ['nodeunit']);

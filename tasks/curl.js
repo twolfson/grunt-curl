@@ -19,6 +19,10 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
+    // Fallback this.file and grunt.utils
+    this.file = this.file || this.files[0];
+    grunt.utils = grunt.utils || grunt.util;
+
     // Collect the filepaths we need
     var file = this.file,
         data = this.data,
