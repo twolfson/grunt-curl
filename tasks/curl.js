@@ -73,7 +73,7 @@ module.exports = function (grunt) {
   var defaultRouter = path.basename;
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
     // Fallback this.file and grunt.utils
-    this.file = this.file || this.files[0];
+    this.file = this.file || this.files[0].orig;
     grunt.utils = grunt.utils || grunt.util;
     // TODO: If utils.minimatch was always defined, use that
     grunt.file.glob.minimatch = grunt.file.glob.minimatch || grunt.file.minimatch;
