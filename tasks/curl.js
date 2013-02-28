@@ -8,9 +8,11 @@
 
 var fs = require('fs'),
     path = require('path'),
-    assert = require('assert'),
+    gruntRetro = require('grunt-retro'),
     request = require('request');
 module.exports = function (grunt) {
+  // Load in grunt-retro
+  grunt = gruntRetro(grunt);
 
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/gruntjs/grunt/blob/master/docs/toc.md
@@ -20,12 +22,6 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
-    // TODO: Modularize this to proxy registerMultiTask and perform fallbacks
-    // TODO: This orig is definitely not safe -- do expansion found on https://github.com/gruntjs/grunt/blob/0.3-stable/lib/grunt/task.js#L80-L100
-    // Fallback this.file and grunt.utils
-    this.file = this.file || this.files[0].orig;
-    grunt.utils = grunt.utils || grunt.util;
-
     // Collect the filepaths we need
     var file = this.file,
         data = this.data,
@@ -72,12 +68,6 @@ module.exports = function (grunt) {
 
   var defaultRouter = path.basename;
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
-    // Fallback this.file and grunt.utils
-    this.file = this.file || this.files[0].orig;
-    grunt.utils = grunt.utils || grunt.util;
-    // TODO: If utils.minimatch was always defined, use that
-    grunt.file.glob.minimatch = grunt.file.glob.minimatch || grunt.file.minimatch;
-
     // Collect the filepaths we need
     var file = this.file,
         src = file.src,
@@ -143,28 +133,6 @@ module.exports = function (grunt) {
   // ==========================================================================
   // HELPERS
   // ==========================================================================
-
-  // TODO: Abstract into a node_module for easier patching
-  // Set up storage for helpers
-  var helpers = {};
-
-  // Fallback helper helper
-  function helper(name) {
-    // Look up and assert the helper exists
-    var helperFn = helpers[name];
-    assert(helperFn, 'GRUNT HELPER: "' + name + '" could not be found.');
-
-    // Call the helper with the arguments
-    var args = [].slice.call(arguments, 1);
-    return helperFn.apply(this, args);
-  }
-  grunt.helper = grunt.helper || helper;
-
-  // Fallback registerHelper
-  function registerHelper(name, fn) {
-    helpers[name] = fn;
-  }
-  grunt.registerHelper = grunt.registerHelper || registerHelper;
 
   // Register our curl helper
   grunt.registerHelper('curl', function (url, cb) {

@@ -47,6 +47,7 @@
     "uri"
   ],
   "dependencies": {
-    "request": "~2.12.0"
+    "request": "~2.12.0",
+    "grunt-retro": "~0.2.0"
   }
 }
