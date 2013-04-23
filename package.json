@@ -27,7 +27,7 @@
     "node": "*"
   },
   "scripts": {
-    "test": "cd test && grunt"
+    "test": "cd test && grunt --force"
   },
   "dependencies": {
     "request": "~2.12.0",
