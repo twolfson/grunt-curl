@@ -41,5 +41,19 @@ exports['curl'] = {
         actualContent = fs.readFileSync('actual/file.zip', 'binary');
     test.equal(actualContent, expectedContent, 'should return the correct value.');
     test.done();
+  },
+  'nonExistingDomain': function(test) {
+    test.expect(1);
+    test.throws(function() {
+      fs.readFileSync('nonexistent-domain', 'binary');
+    });
+    test.done();
+  },
+  'nonExistingFile': function(test) {
+    test.expect(1);
+    test.throws(function() {
+      fs.readFileSync('nonexistent-file', 'binary');
+    });
+    test.done();
   }
 };

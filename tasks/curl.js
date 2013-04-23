@@ -43,7 +43,7 @@ module.exports = function (grunt) {
     function curlResultFn(err, files) {
       // If there is an error, fail
       if (err) {
-        return grunt.fail.fatal(err);
+        grunt.fail.warn(err);
       }
 
       // Concatenate the srcFiles, process the blob through our helper,
@@ -54,9 +54,6 @@ module.exports = function (grunt) {
       var destDir = path.dirname(dest);
       grunt.file.mkdir(destDir);
       fs.writeFileSync(dest, content, 'binary');
-
-      // Fail task if errors were logged.
-      if (that.errorCount) { return false; }
 
       // Otherwise, print a success message.
       grunt.log.writeln('File "' + dest + '" created.');
@@ -99,7 +96,7 @@ module.exports = function (grunt) {
     function curlResultFn(err, files) {
       // If there is an error, fail
       if (err) {
-        return grunt.fail.fatal(err);
+        grunt.fail.warn(err);
       }
 
       // Determine the destinations
@@ -119,9 +116,6 @@ module.exports = function (grunt) {
         fs.writeFileSync(destPath, content, 'binary');
       });
 
-      // Fail task if errors were logged.
-      if (that.errorCount) { return false; }
-
       // Otherwise, print a success message.
       grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
 
@@ -139,6 +133,9 @@ module.exports = function (grunt) {
     // Request the url
     request.get({'url': url, 'encoding': 'binary'}, function (err, res, body) {
       // Callback with the error and body
+      if (res && res.statusCode !== 200) {
+        err = new Error('Fetching "' + url + '" failed with HTTP status code ' + res.statusCode);
+      }
       cb(err, body);
     });
   });
