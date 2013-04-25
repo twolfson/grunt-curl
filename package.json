@@ -39,7 +39,8 @@
   },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "doubleshot": "~1.0.1"
+    "doubleshot": "~1.0.1",
+    "chai": "~1.5.0"
   },
   "keywords": [
     "gruntplugin",

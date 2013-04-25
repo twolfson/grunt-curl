@@ -29,4 +29,4 @@ module.exports = [{
       'is successful': true
     }
   }
-}]
+}];
