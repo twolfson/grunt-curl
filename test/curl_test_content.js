@@ -1,5 +1,6 @@
 // Load in dependencies
-var cp = require('child_process'),
+var fs = require('fs'),
+    cp = require('child_process'),
     exec = cp.exec,
     chai = require('chai'),
     expect = chai.expect;
@@ -73,15 +74,28 @@ module.exports = {
   // curl and curl-dir results
   'is successful':  function () {
     // Assert no error
-    expect(this.err).to.be(null);
+    expect(this.err).to.equal(null);
 
     // and file(s) match as expected
+    this.filenames.forEach(function assertFilenames (filename) {
+      var expectedContent = fs.readFileSync('expected/' + filename),
+          actualContent = fs.readFileSync('actual/' + filename);
+      expect(actualContent).to.equal(expectedContent);
+    });
   },
   'throws an error':  function () {
-    console.log('zzz', this.err);
-
+    expect(this.err).to.not.equal(null);
   },
   'does not create the file':  function () {
-
+    var filenames = this.filenames;
+    expect(function lookupFiles () {
+      filenames.forEach(function lookupFile(filename) {
+        try {
+          fs.statSync('actual/' + filename);
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    }).to['throw']();
   }
 };
