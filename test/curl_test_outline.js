@@ -9,9 +9,9 @@ module.exports = [{
     'downloading a js (utf16) file': {
       'is successful': true
     },
-    'downloading a zip (binary) file': {
-      'is successful': true
-    },
+    // 'downloading a zip (binary) file': {
+    //   'is successful': true
+    // },
     'downloading a file from an invalid domain': {
       'throws an error': true,
       'does not create the file': true
