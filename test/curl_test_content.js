@@ -41,39 +41,41 @@ module.exports = {
   // curl tasks
   'downloading a js (utf16) file': [function () {
     this.task = 'js';
-    this.filenames = [''];
+    this.filenames = ['file.js'];
   }, 'execute task'],
   'downloading a zip (binary) file': [function () {
     this.task = 'zip';
-    this.filenames = [''];
+    this.filenames = ['file.zip'];
   }, 'execute task'],
   'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';
-    this.filenames = [''];
+    this.filenames = ['nonexistent-domain'];
   }, 'execute task'],
   'downloading a nonexistant file': [function () {
     this.task = 'nonExistingFile';
-    this.filenames = [''];
+    this.filenames = ['nonexistent-file'];
   }, 'execute task'],
 
   // curl-dir tasks
   'downloading multiple files': [function () {
     this.task = 'multi';
-    this.filenames = [''];
+    this.filenames = ['multi/LAB.min.js', 'multi/cookiejar.js'];
   }, 'execute task'],
   'downloading brace expanded files':  [function () {
     this.task = 'braceExpansion';
-    this.filenames = [''];
+    this.filenames = ['braceExpansion/LAB.min.js', 'braceExpansion/cookiejar.js'];
   }, 'execute task'],
   'using a custom router': [function () {
     this.task = 'router';
-    this.filenames = [''];
+    this.filenames = ['router/ajax/libs/labjs/2.0.3/LAB.min.js', 'router/ajax/libs/cookiejar/0.5/cookiejar.js'];
   }, 'execute task'],
 
   // curl and curl-dir results
   'is successful':  function () {
-    // Assert no warnings, good stdout, and file(s) match as expected
-    console.log('www', this.err, this.stdout, this.stderr);
+    // Assert no error
+    expect(this.err).to.be(null);
+
+    // and file(s) match as expected
   },
   'throws an error':  function () {
     console.log('zzz', this.err);
