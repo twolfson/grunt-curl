@@ -7,6 +7,9 @@ var cp = require('child_process'),
 module.exports = {
   // Utilities
   'execute task': function (done) {
+    // Relocate to test directory
+    process.chdir(__dirname);
+
     // Execute the cmd and task combination
     var that = this;
     exec(this.cmd + this.task, function (err, stdout, stderr) {
@@ -25,6 +28,7 @@ module.exports = {
     this.cmd = 'grunt clean';
     this.task = '';
   }, 'execute task'],
+  'is clean': function () {},
 
   // Grunt commands
   'grunt curl': function () {
