@@ -1,5 +1,7 @@
-// Load in chai and expect
-var chai = require('chai'),
+// Load in dependencies
+var cp = require('child_process'),
+    exec = cp.exec,
+    chai = require('chai'),
     expect = chai.expect;
 
 module.exports = {
@@ -10,32 +12,41 @@ module.exports = {
   'grunt curl-dir': function () {
     this.cmd = 'grunt curl-dir:';
   },
+  'execute task': function (done) {
+    exec(this.cmd + this.task, done);
+  },
 
   // curl tasks
-  'downloading a js (utf16) file': function () {
+  'downloading a js (utf16) file': [function () {
     this.task = 'js';
-    // TODO: Add filename(s) here
-  },
-  'downloading a zip (binary) file':  function () {
+    this.filenames = [''];
+  }. 'execute task'],
+  'downloading a zip (binary) file': [function () {
     this.task = 'zip';
-  },
-  'downloading a file from an invalid domain':  function () {
+    this.filenames = [''];
+  }, 'execute task'],
+  'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';
-  },
-  'downloading an non-existant file':  function () {
+    this.filenames = [''];
+  }, 'execute task'],
+  'downloading an non-existant file': [function () {
     this.task = 'nonExistingFile';
-  },
+    this.filenames = [''];
+  }, 'execute task'],
 
   // curl-dir tasks
-  'downloading multiple files': function () {
+  'downloading multiple files': [function () {
     this.task = 'multi';
-  },
-  'downloading brace expanded files':  function () {
+    this.filenames = [''];
+  }, 'execute task'],
+  'downloading brace expanded files':  [function () {
     this.task = 'braceExpansion';
-  },
-  'using a custom router': function () {
+    this.filenames = [''];
+  }, 'execute task'],
+  'using a custom router': [function () {
     this.task = 'router';
-  },
+    this.filenames = [''];
+  }, 'execute task'],
 
   // curl and curl-dir results
   'is successful':  function () {
