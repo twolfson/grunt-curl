@@ -44,15 +44,12 @@ module.exports = function (grunt) {
         },
         dest: 'actual/router'
       }
-    },
-    test: {
-      all: '*_test.js'
     }
   });
 
   // Load local tasks.
   grunt.loadTasks('../tasks');
 
-  // Run project task then tests.
-  grunt.registerTask('default', 'curl curl-dir test');
+  // Run project tasks
+  grunt.registerTask('default', 'curl curl-dir');
 };

@@ -34,11 +34,12 @@
     "grunt-retro": "~0.6.0"
   },
   "_devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.3.17",
+    "doubleshot": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "grunt-contrib-nodeunit": "~0.1.2"
+    "doubleshot": "~1.0.1"
   },
   "keywords": [
     "gruntplugin",
