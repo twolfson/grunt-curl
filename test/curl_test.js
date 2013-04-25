@@ -45,14 +45,14 @@ exports['curl'] = {
   'nonExistingDomain': function(test) {
     test.expect(1);
     test.throws(function() {
-      fs.readFileSync('nonexistent-domain', 'binary');
+      fs.readFileSync('actual/nonexistent-domain', 'binary');
     });
     test.done();
   },
   'nonExistingFile': function(test) {
     test.expect(1);
     test.throws(function() {
-      fs.readFileSync('nonexistent-file', 'binary');
+      fs.readFileSync('actual/nonexistent-file', 'binary');
     });
     test.done();
   }
