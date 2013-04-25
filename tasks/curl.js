@@ -132,10 +132,15 @@ module.exports = function (grunt) {
   grunt.registerHelper('curl', function (url, cb) {
     // Request the url
     request.get({'url': url, 'encoding': 'binary'}, function (err, res, body) {
-      // Callback with the error and body
-      if (res && res.statusCode !== 200) {
-        err = new Error('Fetching "' + url + '" failed with HTTP status code ' + res.statusCode);
+      // If there was response, assert the statusCode was good
+      if (res) {
+        var statusCode = res.statusCode;
+        if (statusCode < 200 || statusCode >= 300) {
+          err = new Error('Fetching "' + url + '" failed with HTTP status code ' + statusCode);
+        }
       }
+
+      // Callback with the error and body
       cb(err, body);
     });
   });
