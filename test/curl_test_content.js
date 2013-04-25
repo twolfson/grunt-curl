@@ -13,14 +13,23 @@ module.exports = {
     this.cmd = 'grunt curl-dir:';
   },
   'execute task': function (done) {
-    exec(this.cmd + this.task, done);
+    // Execute the cmd and task combination
+    exec(this.cmd + this.task, function (err, stdout, stderr) {
+      // Save results for later
+      this.err = err;
+      this.stdout = stdout;
+      this.stderr = stderr;
+
+      // Callback
+      done();
+    });
   },
 
   // curl tasks
   'downloading a js (utf16) file': [function () {
     this.task = 'js';
     this.filenames = [''];
-  }. 'execute task'],
+  }, 'execute task'],
   'downloading a zip (binary) file': [function () {
     this.task = 'zip';
     this.filenames = [''];
@@ -29,7 +38,7 @@ module.exports = {
     this.task = 'nonExistingDomain';
     this.filenames = [''];
   }, 'execute task'],
-  'downloading an non-existant file': [function () {
+  'downloading a nonexistant file': [function () {
     this.task = 'nonExistingFile';
     this.filenames = [''];
   }, 'execute task'],

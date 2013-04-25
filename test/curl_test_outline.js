@@ -11,7 +11,7 @@ module.exports = [{
       'throws an error': true,
       'does not create the file': true
     },
-    'downloading a file from an invalid domain': {
+    'downloading a nonexistant file': {
       'throws an error': true,
       'does not create the file': true
     }
