@@ -1,4 +1,9 @@
 module.exports = [{
+// Clean up the test directory
+  'A clean test directory': {
+    'is clean': true
+  }
+}, {
 // curl tests
   'grunt curl': {
     'downloading a js (utf16) file': {

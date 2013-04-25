@@ -5,24 +5,33 @@ var cp = require('child_process'),
     expect = chai.expect;
 
 module.exports = {
+  // Utilities
+  'execute task': function (done) {
+    // Execute the cmd and task combination
+    var that = this;
+    exec(this.cmd + this.task, function (err, stdout, stderr) {
+      // Save results for later
+      that.err = err;
+      that.stdout = stdout;
+      that.stderr = stderr;
+
+      // Callback
+      done();
+    });
+  },
+
+  // Cleaning tasks
+  'A clean test directory': [function () {
+    this.cmd = 'grunt clean';
+    this.task = '';
+  }, 'execute task'],
+
   // Grunt commands
   'grunt curl': function () {
     this.cmd = 'grunt curl:';
   },
   'grunt curl-dir': function () {
     this.cmd = 'grunt curl-dir:';
-  },
-  'execute task': function (done) {
-    // Execute the cmd and task combination
-    exec(this.cmd + this.task, function (err, stdout, stderr) {
-      // Save results for later
-      this.err = err;
-      this.stdout = stdout;
-      this.stderr = stderr;
-
-      // Callback
-      done();
-    });
   },
 
   // curl tasks
@@ -59,9 +68,11 @@ module.exports = {
 
   // curl and curl-dir results
   'is successful':  function () {
-
+    // Assert no warnings, good stdout, and file(s) match as expected
+    console.log('www', this.err, this.stdout, this.stderr);
   },
   'throws an error':  function () {
+    console.log('zzz', this.err);
 
   },
   'does not create the file':  function () {

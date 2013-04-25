@@ -3,5 +3,5 @@ module.exports = function (grunt) {
   require('./grunt')(grunt);
 
   // Run project tasks
-  grunt.registerTask('default', ['curl', 'curl-dir']);
+  grunt.registerTask('default', ['clean', 'curl', 'curl-dir']);
 };

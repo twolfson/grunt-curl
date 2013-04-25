@@ -2,6 +2,9 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    clean: {
+      test: 'actual/'
+    },
     curl: {
       js: {
         src: 'http://cdnjs.cloudflare.com/ajax/libs/labjs/2.0.3/LAB.min.js',
@@ -50,6 +53,11 @@ module.exports = function (grunt) {
   // Load local tasks.
   grunt.loadTasks('../tasks');
 
+  // Load grunt contrib clean (chdir for 0.4)
+  process.chdir('..');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  process.chdir(__dirname);
+
   // Run project tasks
-  grunt.registerTask('default', 'curl curl-dir');
+  grunt.registerTask('default', 'clean curl curl-dir');
 };
