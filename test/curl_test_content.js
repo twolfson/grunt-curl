@@ -47,6 +47,7 @@ module.exports = {
   'downloading a zip (binary) file': [function () {
     this.task = 'zip';
     this.filenames = ['file.zip'];
+    this.timeout(5000);
   }, 'execute task'],
   'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';
@@ -87,15 +88,16 @@ module.exports = {
     expect(this.err).to.not.equal(null);
   },
   'does not create the file':  function () {
-    var filenames = this.filenames;
-    expect(function lookupFiles () {
-      filenames.forEach(function lookupFile(filename) {
-        try {
-          fs.statSync('actual/' + filename);
-        } catch (e) {
-          console.log(e);
-        }
-      });
-    }).to['throw']();
+    // Loop over the files
+    this.filenames.forEach(function lookupFile(filename) {
+      // Grab the file
+      var filepath = 'actual/' + filename;
+      try {
+        fs.statSync(filepath);
+        throw new Error('File "' + filepath + '" was properly located');
+      } catch (e) {
+        expect(e).to.have.property('code', 'ENOENT');
+      }
+    });
   }
 };
