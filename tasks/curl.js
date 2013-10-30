@@ -143,7 +143,7 @@ module.exports = function (grunt) {
       if (res) {
         var statusCode = res.statusCode;
         if (statusCode < 200 || statusCode >= 300) {
-          err = new Error('Fetching ' + JSON.stringify(url) + ' failed with HTTP status code ' + statusCode);
+          err = new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode);
         }
       }
 
