@@ -19,7 +19,7 @@ module.exports = function (grunt) {
           url: 'http://bootstrap.herokuapp.com/',
           method: 'POST',
           form: {
-            js: '["bootstrap-modal.js"]'
+            css: '["scaffolding.less"]'
           }
         },
         dest: 'actual/post.zip'
