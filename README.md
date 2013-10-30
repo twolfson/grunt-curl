@@ -78,6 +78,16 @@ grunt.initConfig({
         return url.replace('http://files.com/', '').replace('http://generic.com/', '');
       },
       dest: 'location/to/save/files'
+    },
+
+    // Use any of request's options
+    custom: {
+      src: [{
+        url: 'http://files.com/path/to/file.js',
+        method: 'POST',
+        body: 'abc'
+      }],
+      dest: 'location/to/save/files'
     }
   }
 }):
