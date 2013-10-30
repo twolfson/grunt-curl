@@ -3,7 +3,8 @@ var fs = require('fs'),
     cp = require('child_process'),
     exec = cp.exec,
     chai = require('chai'),
-    expect = chai.expect;
+    expect = chai.expect,
+    express = require('express');
 
 module.exports = {
   // Utilities
@@ -49,9 +50,19 @@ module.exports = {
     this.filenames = ['file.zip'];
     this.timeout(5000);
   }, 'execute task'],
-  'downloading a POST file': [function () {
-    this.task = 'post';
-    this.filenames = ['post.zip'];
+  'downloading a POST file': [{
+    before: function () {
+      this.task = 'post';
+      this.filenames = ['post.txt'];
+      this.server = express();
+      this.server.post('/hi', express.urlencoded(), function (req, res) {
+        res.send(req.body);
+      });
+      this._server = this.server.listen(4000);
+    },
+    after: function (done) {
+      this._server.close(done);
+    }
   }, 'execute task'],
   'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';

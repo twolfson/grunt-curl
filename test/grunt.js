@@ -16,13 +16,13 @@ module.exports = function (grunt) {
       },
       post: {
         src: {
-          url: 'http://bootstrap.herokuapp.com/',
+          url: 'http://localhost:4000/hi',
           method: 'POST',
           form: {
-            css: '["scaffolding.less"]'
+            hello: 'world'
           }
         },
-        dest: 'actual/post.zip'
+        dest: 'actual/post.txt'
       },
       nonExistingDomain: {
         src: 'http://nonexistent--foo--domain',
