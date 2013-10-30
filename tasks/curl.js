@@ -129,14 +129,21 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Register our curl helper
-  grunt.registerHelper('curl', function (url, cb) {
+  var _ = grunt.util._;
+  grunt.registerHelper('curl', function (options, cb) {
+    // Default to a binary request
+    if (typeof options === 'string') {
+      options = {'url': options};
+    }
+    var params = _.extend({'encoding': 'binary'}, options);
+
     // Request the url
-    request.get({'url': url, 'encoding': 'binary'}, function (err, res, body) {
+    request(params, function (err, res, body) {
       // If there was response, assert the statusCode was good
       if (res) {
         var statusCode = res.statusCode;
         if (statusCode < 200 || statusCode >= 300) {
-          err = new Error('Fetching "' + url + '" failed with HTTP status code ' + statusCode);
+          err = new Error('Fetching ' + JSON.stringify(url) + ' failed with HTTP status code ' + statusCode);
         }
       }
 
