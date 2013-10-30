@@ -25,6 +25,18 @@ module.exports = {
       done();
     });
   },
+  'postServer': {
+    before: function () {
+      this.server = express();
+      this.server.post('/post.txt', express.urlencoded(), function (req, res) {
+        res.send(req.body);
+      });
+      this._server = this.server.listen(4000);
+    },
+    after: function (done) {
+      this._server.close(done);
+    }
+  },
 
   // Cleaning tasks
   'A clean test directory': [function () {
@@ -50,20 +62,10 @@ module.exports = {
     this.task = 'zip';
     this.filenames = ['file.zip'];
   }, 'execute task'],
-  'downloading a POST file': [{
-    before: function () {
+  'downloading a POST file': [function () {
       this.task = 'post';
       this.filenames = ['post.txt'];
-      this.server = express();
-      this.server.post('/hi', express.urlencoded(), function (req, res) {
-        res.send(req.body);
-      });
-      this._server = this.server.listen(4000);
-    },
-    after: function (done) {
-      this._server.close(done);
-    }
-  }, 'execute task'],
+  }, 'postServer', 'execute task'],
   'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';
     this.filenames = ['nonexistent-domain'];
@@ -86,6 +88,10 @@ module.exports = {
     this.task = 'router';
     this.filenames = ['router/ajax/libs/labjs/2.0.3/LAB.min.js', 'router/ajax/libs/cookiejar/0.5/cookiejar.js'];
   }, 'execute task'],
+  'using POST': [function () {
+    this.task = 'post';
+    this.filenames = ['multiPost/post.txt'];
+  },  'postServer', 'execute task'],
 
   // curl and curl-dir results
   'is successful':  function () {

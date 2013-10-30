@@ -16,7 +16,7 @@ module.exports = function (grunt) {
       },
       post: {
         src: {
-          url: 'http://localhost:4000/hi',
+          url: 'http://localhost:4000/post.txt',
           method: 'POST',
           form: {
             hello: 'world'
@@ -56,6 +56,16 @@ module.exports = function (grunt) {
           return url.replace('http://cdnjs.cloudflare.com/', '');
         },
         dest: 'actual/router'
+      },
+      post: {
+        src: [{
+          url: 'http://localhost:4000/post.txt',
+          method: 'POST',
+          form: {
+            hello: 'world'
+          }
+        }],
+        dest: 'actual/multiPost'
       }
     }
   });
