@@ -15,7 +15,7 @@ grunt.loadNpmTasks('grunt-curl');
 [getting_started]: https://github.com/gruntjs/grunt/blob/master/docs/getting_started.md
 
 ## Documentation
-`grunt-curl` retrieves data via [request][request]'s GET method and writes it to file.
+`grunt-curl` retrieves data via [request][request] and writes it to file.
 
 We register two grunt tasks
 ```js
@@ -28,6 +28,16 @@ grunt.initConfig({
     // Long format
     long: {
       src: 'http://files.com/path/to/file.js',
+      dest: 'location/to/download/file.js'
+    },
+
+    // Use any of request's options
+    custom: {
+      src: {
+        url: 'http://files.com/path/to/file.js',
+        method: 'POST',
+        body: 'abc'
+      },
       dest: 'location/to/download/file.js'
     }
   },
