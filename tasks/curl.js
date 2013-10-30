@@ -63,14 +63,18 @@ module.exports = function (grunt) {
     }
   });
 
-  var defaultRouter = path.basename;
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
     // Collect the filepaths we need
     var file = this.file,
         src = file.src,
         dest = file.dest,
         data = this.data,
-        router = data.router || defaultRouter,
+        router = data.router || function defaultRouter (filepath) {
+          if (typeof filepath !== 'string') {
+            filepath = filepath.url || filepath.uri;
+          }
+          return path.basename(filepath);
+        },
         done = this.async(),
         that = this;
 
@@ -135,6 +139,7 @@ module.exports = function (grunt) {
     if (typeof options === 'string') {
       options = {'url': options};
     }
+    console.log(options);
     var params = _.extend({'encoding': 'binary'}, options);
 
     // Request the url
