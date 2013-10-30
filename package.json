@@ -35,9 +35,10 @@
   },
   "_devDependencies": {
     "grunt": "~0.3.17",
-    "doubleshot": "~1.0.1",
+    "doubleshot": "~2.13.1",
     "chai": "~1.5.0",
-    "grunt-contrib-clean": "~0.3.2"
+    "grunt-contrib-clean": "~0.3.2",
+    "express": "~3.4.4"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
