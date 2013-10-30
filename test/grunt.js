@@ -14,6 +14,16 @@ module.exports = function (grunt) {
         src: 'https://github.com/twitter/bootstrap/blob/91b92f9dd09c1794d02c6157daba5405d8f09e39/assets/bootstrap.zip?raw=true',
         dest: 'actual/file.zip'
       },
+      custom: {
+        src: {
+          url: 'http://bootstrap.herokuapp.com/',
+          method: 'POST',
+          form: {
+            js: 'bootstrap-modal.js'
+          }
+        },
+        dest: 'actual/custom.zip'
+      },
       nonExistingDomain: {
         src: 'http://nonexistent--foo--domain',
         dest: 'actual/nonexistent-domain'
