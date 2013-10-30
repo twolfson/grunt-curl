@@ -14,6 +14,7 @@ module.exports = {
 
     // Execute the cmd and task combination
     var that = this;
+    this.timeout(5000);
     exec(this.cmd + this.task, function (err, stdout, stderr) {
       // Save results for later
       that.err = err;
@@ -48,7 +49,6 @@ module.exports = {
   'downloading a zip (binary) file': [function () {
     this.task = 'zip';
     this.filenames = ['file.zip'];
-    this.timeout(5000);
   }, 'execute task'],
   'downloading a POST file': [{
     before: function () {
