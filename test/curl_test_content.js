@@ -49,6 +49,10 @@ module.exports = {
     this.filenames = ['file.zip'];
     this.timeout(5000);
   }, 'execute task'],
+  'downloading a POST file': [function () {
+    this.task = 'post';
+    this.filenames = ['post.zip'];
+  }, 'execute task'],
   'downloading a file from an invalid domain': [function () {
     this.task = 'nonExistingDomain';
     this.filenames = ['nonexistent-domain'];
