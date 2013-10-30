@@ -84,7 +84,7 @@ module.exports = function (grunt) {
     var minimatch = grunt.file.glob.minimatch,
         braceExpand = minimatch.braceExpand;
     srcFiles = srcFiles.reduce(function expandSrcFiles (retArr, srcFile) {
-      var srcFileArr = braceExpand(srcFile);
+      var srcFileArr = typeof srcFile === 'string' ? braceExpand(srcFile) : [srcFile];
       retArr = retArr.concat(srcFileArr);
       return retArr;
     }, []);
