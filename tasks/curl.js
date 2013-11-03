@@ -139,7 +139,6 @@ module.exports = function (grunt) {
     if (typeof options === 'string') {
       options = {'url': options};
     }
-    console.log(options);
     var params = _.extend({'encoding': 'binary'}, options);
 
     // Request the url
