@@ -46,9 +46,15 @@ module.exports = function (grunt) {
         grunt.fail.warn(err);
       }
 
-      // Concatenate the srcFiles, process the blob through our helper,
-      var separator = data.separator || '\n',
-          content = files.join(separator);
+      var content = '';
+      if (src.json === true) {
+        // Stringify the result
+        content = JSON.stringify(files, null, 2);
+      } else {
+        // Concatenate the srcFiles, process the blob through our helper,
+        var separator = data.separator || '\n';
+        content = files.join(separator);
+      }
 
       // Write out the content
       var destDir = path.dirname(dest);

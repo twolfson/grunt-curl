@@ -7,10 +7,12 @@
       - 'is successful'
   - 'downloading a zip (binary) file':
       - 'is successful'
+  - 'downloading a JSON file':
+      - 'is successful'
   - 'downloading a file from an invalid domain':
       - 'throws an error'
       - 'does not create the file'
-  - 'downloading a nonexistant file':
+  - 'downloading a nonexistent file':
       - 'throws an error'
       - 'does not create the file'
   - 'downloading a POST file':

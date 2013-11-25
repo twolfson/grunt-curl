@@ -15,7 +15,10 @@ module.exports = {
     // Execute the cmd and task combination
     var that = this;
     this.timeout(5000);
+
     exec(this.cmd + this.task, function (err, stdout, stderr) {
+
+      //console.log('Task done: '+err+' : '+stdout+' : '+stderr);
       // Save results for later
       that.err = err;
       that.stdout = stdout;
@@ -62,6 +65,10 @@ module.exports = {
     this.task = 'zip';
     this.filenames = ['file.zip'];
   }, 'execute task'],
+  'downloading a JSON file': [function () {
+    this.task = 'json';
+    this.filenames = ['file.json'];
+  }, 'execute task'],
   'downloading a POST file': [function () {
       this.task = 'post';
       this.filenames = ['post.txt'];
@@ -70,7 +77,7 @@ module.exports = {
     this.task = 'nonExistingDomain';
     this.filenames = ['nonexistent-domain'];
   }, 'execute task'],
-  'downloading a nonexistant file': [function () {
+  'downloading a nonexistent file': [function () {
     this.task = 'nonExistingFile';
     this.filenames = ['nonexistent-file'];
   }, 'execute task'],
