@@ -50,13 +50,15 @@ module.exports = function (grunt) {
       var separator = data.separator || '\n',
           content = files.join(separator);
 
-      // Write out the content
-      var destDir = path.dirname(dest);
-      grunt.file.mkdir(destDir);
-      fs.writeFileSync(dest, content, 'binary');
+      // Write out the content if `dest` option present.
+      if (dest) {
+        var destDir = path.dirname(dest);
+        grunt.file.mkdir(destDir);
+        fs.writeFileSync(dest, content, 'binary');
 
-      // Otherwise, print a success message.
-      grunt.log.writeln('File "' + dest + '" created.');
+        // Otherwise, print a success message.
+        grunt.log.writeln('File "' + dest + '" created.');
+      }
 
       // Callback
       done();

@@ -31,6 +31,9 @@ module.exports = function (grunt) {
       nonExistingFile: {
         src: 'https://github.com/nonexistent--foo--file',
         dest: 'actual/nonexistent-file'
+      },
+      noDest: {
+        src: 'http://cdnjs.cloudflare.com/ajax/libs/labjs/2.0.3/LAB.min.js'
       }
     },
     'curl-dir': {

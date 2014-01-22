@@ -15,6 +15,8 @@
       - 'does not create the file'
   - 'downloading a POST file':
     - 'is successful'
+  - 'without dest option':
+    - 'is successful'
 # curl-dir tests
 - 'grunt curl-dir':
   - 'downloading multiple files':
