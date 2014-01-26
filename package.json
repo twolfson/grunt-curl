@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "request": "~2.21.0",
-    "grunt-retro": "~0.6.0"
+    "grunt-retro": "~0.7.0"
   },
   "_devDependencies": {
     "grunt": "~0.3.17",
