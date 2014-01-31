@@ -9,7 +9,9 @@
 var fs = require('fs'),
     path = require('path'),
     gruntRetro = require('grunt-retro'),
-    request = require('request');
+    request = require('request'),
+    async = require('async'),
+    _ = require('lodash');
 module.exports = function (grunt) {
   // Load in grunt-retro
   grunt = gruntRetro(grunt);
@@ -37,7 +39,6 @@ module.exports = function (grunt) {
     }
 
     // Asynchronously fetch the files in parallel
-    var async = grunt.utils.async;
     async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
 
     function curlResultFn(err, files) {
@@ -94,7 +95,6 @@ module.exports = function (grunt) {
     }, []);
 
     // Asynchronously fetch the files in parallel
-    var async = grunt.utils.async;
     async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
 
     function curlResultFn(err, files) {
@@ -133,7 +133,6 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Register our curl helper
-  var _ = grunt.util._;
   grunt.registerHelper('curl', function (options, cb) {
     // Default to a binary request
     if (typeof options === 'string') {
