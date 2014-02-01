@@ -24,7 +24,7 @@
   "main": "grunt.js",
   "bin": "bin/grunt-curl",
   "engines": {
-    "node": "*"
+    "node": ">= 0.8.0"
   },
   "scripts": {
     "test": "doubleshot"
