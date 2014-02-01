@@ -45,7 +45,8 @@
     "doubleshot": "~2.13.1",
     "chai": "~1.5.0",
     "grunt-contrib-clean": "~0.4.1",
-    "express": "~3.4.4"
+    "express": "~3.4.4",
+    "grunt-cli": "~0.1.13"
   },
   "keywords": [
     "gruntplugin",
