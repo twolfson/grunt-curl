@@ -1,4 +1,4 @@
-# grunt-curl
+# grunt-curl [![Build status](https://travis-ci.org/twolfson/grunt-curl.png?branch=master)](https://travis-ci.org/twolfson/grunt-curl)
 
 Download files from the internet via grunt.
 
