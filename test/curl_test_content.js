@@ -74,6 +74,10 @@ module.exports = {
     this.task = 'nonExistingFile';
     this.filenames = ['nonexistent-file'];
   }, 'execute task'],
+  'without dest option': [function () {
+    this.task = 'noDest';
+    this.filenames = [];
+  },  'execute task'],
 
   // curl-dir tasks
   'downloading multiple files': [function () {
