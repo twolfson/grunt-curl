@@ -11,6 +11,7 @@ var fs = require('fs'),
     gruntRetro = require('grunt-retro'),
     request = require('request'),
     async = require('async'),
+    concat = require('concat-stream'),
     _ = require('lodash');
 module.exports = function (grunt) {
   // Load in grunt-retro
@@ -117,7 +118,7 @@ module.exports = function (grunt) {
         var destPath = destArr[i],
             destDir = path.dirname(destPath);
         grunt.file.mkdir(destDir);
-        fs.writeFileSync(destPath, content, 'binary');
+        fs.writeFileSync(destPath, content);
       });
 
       // Otherwise, print a success message.
@@ -134,24 +135,22 @@ module.exports = function (grunt) {
 
   // Register our curl helper
   grunt.registerHelper('curl', function (options, cb) {
-    // Default to a binary request
-    if (typeof options === 'string') {
-      options = {'url': options};
-    }
-    var params = _.extend({'encoding': 'binary'}, options);
-
     // Request the url
-    request(params, function (err, res, body) {
-      // If there was response, assert the statusCode was good
-      if (res) {
-        var statusCode = res.statusCode;
-        if (statusCode < 200 || statusCode >= 300) {
-          err = new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode);
-        }
+    var req = request(options);
+    req.on('error', cb);
+    req.on('response', function (res) {
+      // If there was a bad status code, complain
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + res.statusCode));
       }
 
-      // Callback with the error and body
-      cb(err, body);
+      // If an error, occurs callback with it
+      res.on('error', cb);
+
+      // Collect the data and callback
+      res.pipe(concat(function (buff) {
+        cb(null, buff);
+      }));
     });
   });
 
