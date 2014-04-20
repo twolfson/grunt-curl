@@ -44,11 +44,11 @@
   },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "doubleshot": "~2.13.1",
     "chai": "~1.9.0",
     "grunt-contrib-clean": "~0.5.0",
     "express": "~3.4.4",
-    "grunt-cli": "~0.1.13"
+    "grunt-cli": "~0.1.13",
+    "mocha": "~1.18.2"
   },
   "keywords": [
     "gruntplugin",
