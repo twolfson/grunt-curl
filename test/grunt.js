@@ -2,9 +2,6 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    clean: {
-      test: 'actual/'
-    },
     curl: {
       js: {
         src: 'http://cdnjs.cloudflare.com/ajax/libs/labjs/2.0.3/LAB.min.js',
