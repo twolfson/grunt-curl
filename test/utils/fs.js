@@ -15,9 +15,9 @@ exports._readFile = function (key, path, encoding) {
 };
 
 exports.readExpectedFile = function (path, encoding) {
-  exports._readFile('expectedContent', path, encoding);
+  exports._readFile('expectedContent', 'expected/' + path, encoding);
 };
 
 exports.readActualFile = function (path, encoding) {
-  exports._readFile('actualContent', path, encoding);
+  exports._readFile('actualContent', 'actual/' + path, encoding);
 };
