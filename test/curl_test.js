@@ -20,7 +20,7 @@ describe('grunt curl', function () {
   });
 
   describe('downloading a utf8 file (js)', function () {
-    gruntUtils.exec('curl:js');
+    gruntUtils.runTask('curl:js');
     fsUtils.readExpectedFile('file.js', 'utf8');
     fsUtils.readActualFile('file.js', 'utf8');
 
@@ -31,7 +31,7 @@ describe('grunt curl', function () {
   });
 
   describe('downloading a binary file (zip)', function () {
-    gruntUtils.exec('curl:zip');
+    gruntUtils.runTask('curl:zip');
     fsUtils.readExpectedFile('file.zip', 'binary');
     fsUtils.readActualFile('file.zip', 'binary');
 
@@ -42,7 +42,7 @@ describe('grunt curl', function () {
   });
 
   describe('downloading a file from an invalid domain', function () {
-    gruntUtils.exec('curl:nonExistingDomain');
+    gruntUtils.runTask('curl:nonExistingDomain');
     fsUtils.exists('actual/nonexistent-domain');
 
     it('throws an error', function () {
@@ -55,7 +55,7 @@ describe('grunt curl', function () {
   });
 
   describe('downloading a nonexistant file', function () {
-    gruntUtils.exec('curl:nonExistingFile');
+    gruntUtils.runTask('curl:nonExistingFile');
     fsUtils.exists('actual/nonexistent-file');
 
     it('throws an error', function () {

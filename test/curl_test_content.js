@@ -18,16 +18,6 @@ module.exports = {
       this.filenames = ['post.txt'];
   }, 'postServer', 'execute task'],
 
-
-  'downloading a file from an invalid domain': [function () {
-    this.task = 'nonExistingDomain';
-    this.filenames = [];
-  }, 'execute task'],
-  'downloading a nonexistant file': [function () {
-    this.task = 'nonExistingFile';
-    this.filenames = ['nonexistent-file'];
-  }, 'execute task'],
-
   // curl-dir tasks
   'downloading multiple files': [function () {
     this.task = 'multi';

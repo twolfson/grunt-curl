@@ -2,7 +2,7 @@
 var exec = require('child_process').exec;
 var quote = require('shell-quote').quote;
 
-exports.exec = function (task) {
+exports.runTask = function (task) {
   before(function runTask (done) {
     // Relocate to test directory
     process.chdir(__dirname + '/..');
