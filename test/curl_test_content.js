@@ -7,24 +7,6 @@ var fs = require('fs'),
     express = require('express');
 
 module.exports = {
-  // Utilities
-  'execute task': function (done) {
-    // Relocate to test directory
-    process.chdir(__dirname);
-
-    // Execute the cmd and task combination
-    var that = this;
-    this.timeout(5000);
-    exec(this.cmd + this.task, function (err, stdout, stderr) {
-      // Save results for later
-      that.err = err;
-      that.stdout = stdout;
-      that.stderr = stderr;
-
-      // Callback
-      done();
-    });
-  },
   'postServer': {
     before: function () {
       this.server = express();

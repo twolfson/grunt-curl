@@ -1,7 +1,7 @@
+var gruntUtils = require('./utils/grunt');
+
 // Clean up the test directory
-before(function () {
-  // describe('is clean'
-});
+gruntUtils.exec('clean');
 
 // curl tests
 describe('grunt curl', function () {

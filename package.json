@@ -48,7 +48,8 @@
     "grunt-contrib-clean": "~0.5.0",
     "express": "~3.4.4",
     "grunt-cli": "~0.1.13",
-    "mocha": "~1.18.2"
+    "mocha": "~1.18.2",
+    "shell-quote": "~1.4.1"
   },
   "keywords": [
     "gruntplugin",
