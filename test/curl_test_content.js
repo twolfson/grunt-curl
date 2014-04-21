@@ -12,23 +12,7 @@ module.exports = {
     }
   },
 
-  // Grunt commands
-  'grunt curl': function () {
-    this.cmd = 'grunt curl:';
-  },
-  'grunt curl-dir': function () {
-    this.cmd = 'grunt curl-dir:';
-  },
-
   // curl tasks
-  'downloading a js (utf16) file': [function () {
-    this.task = 'js';
-    this.filenames = ['file.js'];
-  }, 'execute task'],
-  'downloading a zip (binary) file': [function () {
-    this.task = 'zip';
-    this.filenames = ['file.zip'];
-  }, 'execute task'],
   'downloading a POST file': [function () {
       this.task = 'post';
       this.filenames = ['post.txt'];
@@ -59,33 +43,4 @@ module.exports = {
     this.task = 'post';
     this.filenames = ['multiPost/post.txt'];
   },  'postServer', 'execute task'],
-
-  // curl and curl-dir results
-  'is successful':  function () {
-    // Assert no error
-    expect(this.err).to.equal(null);
-
-    // and file(s) match as expected
-    this.filenames.forEach(function assertFilenames (filename) {
-      var expectedContent = fs.readFileSync('expected/' + filename, 'binary'),
-          actualContent = fs.readFileSync('actual/' + filename, 'binary');
-      expect(actualContent).to.equal(expectedContent);
-    });
-  },
-  'throws an error':  function () {
-    expect(this.err).to.not.equal(null);
-  },
-  'does not create the file':  function () {
-    // Loop over the files
-    this.filenames.forEach(function lookupFile(filename) {
-      // Grab the file
-      var filepath = 'actual/' + filename;
-      try {
-        fs.statSync(filepath);
-        throw new Error('File "' + filepath + '" was properly located');
-      } catch (e) {
-        expect(e).to.have.property('code', 'ENOENT');
-      }
-    });
-  }
 };

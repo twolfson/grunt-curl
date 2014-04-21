@@ -9,7 +9,20 @@ gruntUtils.exec('clean');
 
 // curl tests
 describe('grunt curl', function () {
-  describe('downloading a js file', function () {
+  // DEV: This is a regression test
+  describe.skip('downloading a locally hosted file', function () {
+    it('is successful', function () {
+
+    });
+  });
+
+  describe.skip('downloading a POST file', function () {
+    it('is successful', function () {
+
+    });
+  });
+
+  describe('downloading a utf8 file (js)', function () {
     gruntUtils.exec('curl:js');
     fsUtils.readExpectedFile('file.js', 'utf8');
     fsUtils.readActualFile('file.js', 'utf8');
@@ -20,9 +33,14 @@ describe('grunt curl', function () {
     });
   });
 
-  describe.skip('downloading a zip (binary) file', function () {
-    it('is successful', function () {
+  describe('downloading a binary file (zip)', function () {
+    gruntUtils.exec('curl:zip');
+    fsUtils.readExpectedFile('file.zip', 'binary');
+    fsUtils.readActualFile('file.zip', 'binary');
 
+    it('is successful', function () {
+      expect(this.err).to.equal(null);
+      expect(this.actualContent).to.equal(this.expectedContent);
     });
   });
 
@@ -44,11 +62,6 @@ describe('grunt curl', function () {
     });
   });
 
-  describe.skip('downloading a POST file', function () {
-    it('is successful', function () {
-
-    });
-  });
 });
 
 // curl-dir tests

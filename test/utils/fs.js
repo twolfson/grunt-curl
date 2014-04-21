@@ -21,3 +21,17 @@ exports.readExpectedFile = function (path, encoding) {
 exports.readActualFile = function (path, encoding) {
   exports._readFile('actualContent', 'actual/' + path, encoding);
 };
+
+// Helperto determine file existence
+exports.exists = function (path) {
+  before(function loadFile (done) {
+    var that = this;
+    fs.exists(path, function (exists) {
+      that.fileExists = exists;
+      done();
+    });
+  });
+  after(function cleanupFile () {
+    delete this.fileExists;
+  });
+};
