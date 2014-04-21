@@ -27,7 +27,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "doubleshot"
+    "test": "mocha"
   },
   "dependencies": {
     "request": "~2.33.0",
