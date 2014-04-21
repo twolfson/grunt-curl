@@ -17,6 +17,7 @@ describe.only('grunt curl-dir', function () {
         expect(this.actualContent).to.equal(this.expectedContent);
       });
     });
+
     describe('the second file', function () {
       fsUtils.readExpectedFile('multi/cookiejar.js', 'utf8');
       fsUtils.readActualFile('multi/cookiejar.js', 'utf8');
@@ -27,16 +28,55 @@ describe.only('grunt curl-dir', function () {
       });
     });
   });
-  describe.skip('downloading brace expanded files', function () {
-    it('is successful', function () {
 
+  describe('downloading brace expanded files', function () {
+    gruntUtils.runTask('curl-dir:braceExpansion');
+
+    describe('the first file', function () {
+      fsUtils.readExpectedFile('braceExpansion/LAB.min.js', 'utf8');
+      fsUtils.readActualFile('braceExpansion/LAB.min.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
+    });
+
+    describe('the second file', function () {
+      fsUtils.readExpectedFile('braceExpansion/cookiejar.js', 'utf8');
+      fsUtils.readActualFile('braceExpansion/cookiejar.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
     });
   });
-  describe.skip('using a custom router', function () {
-    it('is successful', function () {
 
+  describe('using a custom router', function () {
+    gruntUtils.runTask('curl-dir:router');
+
+    describe('the first file', function () {
+      fsUtils.readExpectedFile('router/ajax/libs/labjs/2.0.3/LAB.min.js', 'utf8');
+      fsUtils.readActualFile('router/ajax/libs/labjs/2.0.3/LAB.min.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
+    });
+
+    describe('the second file', function () {
+      fsUtils.readExpectedFile('router/ajax/libs/cookiejar/0.5/cookiejar.js', 'utf8');
+      fsUtils.readActualFile('router/ajax/libs/cookiejar/0.5/cookiejar.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
     });
   });
+
   describe.skip('using POST', function () {
     it('is successful', function () {
 
