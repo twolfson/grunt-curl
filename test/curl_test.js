@@ -1,24 +1,11 @@
 // Load in dependencies
 var expect = require('chai').expect;
-var express = require('express');
 var fsUtils = require('./utils/fs');
 var gruntUtils = require('./utils/grunt');
+var serverUtils = require('./utils/server');
 
 // curl tests
 describe('grunt curl', function () {
-  // DEV: This is a regression test
-  describe.skip('downloading a locally hosted file', function () {
-    it('is successful', function () {
-
-    });
-  });
-
-  describe.skip('downloading a POST file', function () {
-    it('is successful', function () {
-
-    });
-  });
-
   describe('downloading a utf8 file (js)', function () {
     gruntUtils.runTask('curl:js');
     fsUtils.readExpectedFile('file.js', 'utf8');
@@ -64,6 +51,18 @@ describe('grunt curl', function () {
     it('does not create the file', function () {
       expect(this.fileExiss).to.not.equal(false);
 
+    });
+  });
+
+  describe.only('downloading a POST file', function () {
+    serverUtils.runPostServer();
+    gruntUtils.runTask('curl:post');
+    fsUtils.readExpectedFile('post.txt', 'utf8');
+    fsUtils.readActualFile('post.txt', 'utf8');
+
+    it('is successful', function () {
+      expect(this.err).to.equal(null);
+      expect(this.actualContent).to.equal(this.expectedContent);
     });
   });
 });

@@ -4,7 +4,7 @@ var fsUtils = require('./utils/fs');
 var gruntUtils = require('./utils/grunt');
 
 // curl-dir tests
-describe.only('grunt curl-dir', function () {
+describe('grunt curl-dir', function () {
   describe('downloading multiple files', function () {
     gruntUtils.runTask('curl-dir:multi');
 
