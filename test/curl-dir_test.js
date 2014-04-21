@@ -13,7 +13,8 @@ describe.only('grunt curl-dir', function () {
       fsUtils.readActualFile('multi/LAB.min.js', 'utf8');
 
       it('is successfully downloaded', function () {
-
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
       });
     });
     describe('the second file', function () {
@@ -21,7 +22,8 @@ describe.only('grunt curl-dir', function () {
       fsUtils.readActualFile('multi/cookiejar.js', 'utf8');
 
       it('is successfully downloaded', function () {
-
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
       });
     });
   });
