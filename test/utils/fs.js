@@ -22,7 +22,7 @@ exports.readActualFile = function (path, encoding) {
   exports._readFile('actualContent', 'actual/' + path, encoding);
 };
 
-// Helperto determine file existence
+// Helper to determine file existence
 exports.exists = function (path) {
   before(function loadFile (done) {
     var that = this;
