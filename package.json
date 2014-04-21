@@ -1,7 +1,7 @@
 {
   "name": "grunt-curl",
   "description": "Download files from the internet via grunt.",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "homepage": "https://github.com/twolfson/grunt-curl",
   "author": {
     "name": "Todd Wolfson",
