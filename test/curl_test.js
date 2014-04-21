@@ -44,20 +44,29 @@ describe('grunt curl', function () {
     });
   });
 
-  describe.skip('downloading a file from an invalid domain', function () {
-    it('throws an error', function () {
+  describe('downloading a file from an invalid domain', function () {
+    gruntUtils.exec('curl:nonExistingDomain');
+    fsUtils.exists('actual/nonexistent-domain');
 
+    it('throws an error', function () {
+      expect(this.err).to.not.equal(null);
     });
+
     it('does not create the file', function () {
+      expect(this.fileExiss).to.not.equal(false);
 
     });
   });
 
   describe.skip('downloading a nonexistant file', function () {
-    it('throws an error', function () {
+    gruntUtils.exec('curl:nonExistingFile');
+    fsUtils.exists('actual/nonexistent-file');
 
+    it('throws an error', function () {
+      expect(this.err).to.not.equal(null);
     });
     it('does not create the file', function () {
+      expect(this.fileExiss).to.not.equal(false);
 
     });
   });
