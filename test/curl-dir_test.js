@@ -2,6 +2,7 @@
 var expect = require('chai').expect;
 var fsUtils = require('./utils/fs');
 var gruntUtils = require('./utils/grunt');
+var serverUtils = require('./utils/server');
 
 // curl-dir tests
 describe('grunt curl-dir', function () {
@@ -77,9 +78,15 @@ describe('grunt curl-dir', function () {
     });
   });
 
-  describe.skip('using POST', function () {
-    it('is successful', function () {
+  describe('using POST', function () {
+    serverUtils.runPostServer();
+    gruntUtils.runTask('curl-dir:post');
+    fsUtils.readExpectedFile('multiPost/post.txt', 'utf8');
+    fsUtils.readActualFile('multiPost/post.txt', 'utf8');
 
+    it('is successful', function () {
+      expect(this.err).to.equal(null);
+      expect(this.actualContent).to.equal(this.expectedContent);
     });
   });
 });
