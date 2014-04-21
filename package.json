@@ -27,7 +27,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "rm -r test/actual; mocha"
+    "test": "rm -r test/actual 2> /dev/null; mocha"
   },
   "dependencies": {
     "request": "~2.33.0",
