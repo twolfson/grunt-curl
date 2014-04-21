@@ -1,3 +1,5 @@
+// Load in dependencies
+var exec = require('child_process').exec;
 var quote = require('shell-quote').quote;
 
 exports.exec = function (task) {

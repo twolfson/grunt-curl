@@ -1,3 +1,7 @@
+// Load in dependencies
+var fs = require('fs');
+var expect = require('chai').expect;
+var express = require('express');
 var gruntUtils = require('./utils/grunt');
 
 // Clean up the test directory
@@ -6,33 +10,33 @@ gruntUtils.exec('clean');
 // curl tests
 describe('grunt curl', function () {
   describe('downloading a js (utf16) file', function () {
-      it('is successful', function () {
+    it('is successful', function () {
 
-      });
+    });
   });
 
   describe('downloading a zip (binary) file', function () {
-      it('is successful', function () {
+    it('is successful', function () {
 
-      });
+    });
   });
 
   describe('downloading a file from an invalid domain', function () {
-      it('throws an error', function () {
+    it('throws an error', function () {
 
-      });
-      it('does not create the file', function () {
+    });
+    it('does not create the file', function () {
 
-      });
+    });
   });
 
   describe('downloading a nonexistant file', function () {
-      it('throws an error', function () {
+    it('throws an error', function () {
 
-      });
-      it('does not create the file', function () {
+    });
+    it('does not create the file', function () {
 
-      });
+    });
   });
 
   describe('downloading a POST file', function () {

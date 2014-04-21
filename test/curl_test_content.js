@@ -1,11 +1,3 @@
-// Load in dependencies
-var fs = require('fs'),
-    cp = require('child_process'),
-    exec = cp.exec,
-    chai = require('chai'),
-    expect = chai.expect,
-    express = require('express');
-
 module.exports = {
   'postServer': {
     before: function () {
@@ -19,13 +11,6 @@ module.exports = {
       this._server.close(done);
     }
   },
-
-  // Cleaning tasks
-  'A clean test directory': [function () {
-    this.cmd = 'grunt clean';
-    this.task = '';
-  }, 'execute task'],
-  'is clean': function () {},
 
   // Grunt commands
   'grunt curl': function () {
