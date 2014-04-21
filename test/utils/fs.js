@@ -1,0 +1,23 @@
+var fs = require('fs');
+
+// Helper to load file into mocha's `this` context
+exports._readFile = function (key, path, encoding) {
+  before(function loadFile (done) {
+    var that = this;
+    fs.readFile(path, encoding, function (err, content) {
+      that[key] = content;
+      done(err);
+    });
+  });
+  after(function cleanupFile () {
+    delete this[key];
+  });
+};
+
+exports.readExpectedFile = function (path, encoding) {
+  exports._readFile('expectedContent', path, encoding);
+};
+
+exports.readActualFile = function (path, encoding) {
+  exports._readFile('actualContent', path, encoding);
+};

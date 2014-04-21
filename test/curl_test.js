@@ -10,6 +10,8 @@ gruntUtils.exec('clean');
 // curl tests
 describe('grunt curl', function () {
   describe('downloading a js (utf16) file', function () {
+    gruntUtils.exec('curl:js');
+
     it('is successful', function () {
 
     });
