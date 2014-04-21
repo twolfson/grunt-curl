@@ -11,6 +11,16 @@ module.exports = function (grunt) {
         src: 'https://github.com/twitter/bootstrap/blob/91b92f9dd09c1794d02c6157daba5405d8f09e39/assets/bootstrap.zip?raw=true',
         dest: 'actual/file.zip'
       },
+      get: {
+        src: {
+          url: 'http://localhost:4000/get.txt',
+          method: 'GET',
+          qs: {
+            hello: 'world'
+          }
+        },
+        dest: 'actual/get.txt'
+      },
       post: {
         src: {
           url: 'http://localhost:4000/post.txt',
