@@ -32,36 +32,45 @@ module.exports = function (grunt) {
         done = this.async(),
         that = this;
 
-    // Upcast the srcFiles to an array
+    // If we have received an array, condense it
+    // DEV: If there are multiple files, we cannot concatenate them since that requires buffering
+    // DEV: which creates issues with large files. As a result, do not allow multiple files.
     var srcFiles = src;
-    if (!Array.isArray(srcFiles)) {
-      srcFiles = [src];
+    if (Array.isArray(srcFiles)) {
+      // If there were no files found, be informative
+      if (srcFiles.length === 0) {
+        grunt.fail.warn('No source files were specified. Stopping `grunt-curl` early.');
+        return done();
+      // Otherwise, if there were too many files, complain and leave
+      } else if (srcFiles.length > 1) {
+        grunt.fail.warn('Too many source files received. Expected: 1, Actual: ' + srcFiles.length + '. Stopping `grunt-curl` early.');
+        return done();
+      }
     }
+    var srcFile = srcFiles[0];
 
     // Asynchronously fetch the files in parallel
-    async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
-
-    function curlResultFn(err, files) {
+    grunt.helper('curl', srcFile, function curlResultFn (err, res) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
+        return done();
       }
-
-      // Concatenate the srcFiles, process the blob through our helper,
-      var separator = data.separator || '\n',
-          content = files.join(separator);
 
       // Write out the content
       var destDir = path.dirname(dest);
       grunt.file.mkdir(destDir);
-      fs.writeFileSync(dest, content, 'binary');
+      res.pipe(fs.createWriteStream(dest));
 
-      // Otherwise, print a success message.
-      grunt.log.writeln('File "' + dest + '" created.');
+      // When the stream completes, exit
+      res.on('end', function finishWrite () {
+        // Otherwise, print a success message.
+        grunt.log.writeln('File "' + dest + '" created.');
 
-      // Callback
-      done();
-    }
+        // Callback
+        done();
+      });
+    });
   });
 
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
