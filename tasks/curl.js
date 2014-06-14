@@ -171,10 +171,10 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Register our curl helper
-  grunt.registerHelper('curl', function (params, cb) {
+  grunt.registerHelper('curl', function (info, cb) {
     // Default to a binary request
-    var options = params.src;
-    var dest = params.dest;
+    var options = info.src;
+    var dest = info.dest;
     if (typeof options === 'string') {
       options = {'url': options};
     }
