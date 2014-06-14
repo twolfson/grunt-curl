@@ -219,6 +219,13 @@ Support this project and [others by twolfson][gittip] via [gittip][].
 [gittip-badge]: https://rawgithub.com/twolfson/gittip-badge/master/dist/gittip.png
 [gittip]: https://www.gittip.com/twolfson
 
-## License
-Copyright (c) 2013 Todd Wolfson
-Licensed under the MIT license.
+## Unlicense
+As of Jun 14 2014, Todd Wolfson has released this repository and its contents to the public domain.
+
+It has been released under the [UNLICENSE][].
+
+[UNLICENSE]: UNLICENSE
+
+Prior to Jun 14 2014, this repository and its contents were licensed under the [MIT license][].
+
+[MIT license]: https://github.com/twolfson/grunt-curl/blob/1.5.1/LICENSE-MIT
