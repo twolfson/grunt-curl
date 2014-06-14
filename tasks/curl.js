@@ -1,36 +1,22 @@
-/*
- * grunt-curl
- * https://github.com/twolfson/grunt-curl
- *
- * Copyright (c) 2013 Todd Wolfson
- * Licensed under the MIT license.
- */
+// Load in dependencies
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
+var async = require('async');
+var gruntRetro = require('grunt-retro');
+var request = require('request');
 
-var fs = require('fs'),
-    path = require('path'),
-    gruntRetro = require('grunt-retro'),
-    request = require('request'),
-    async = require('async'),
-    _ = require('lodash');
+// Define our tasks
 module.exports = function (grunt) {
   // Load in grunt-retro
   grunt = gruntRetro(grunt);
 
-  // Please see the grunt documentation for more information regarding task and
-  // helper creation: https://github.com/gruntjs/grunt/blob/master/docs/toc.md
-
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
-
+  // Define a task for single files
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
     // Collect the filepaths we need
-    var file = this.file,
-        data = this.data,
-        src = file.src,
-        dest = file.dest,
-        done = this.async(),
-        that = this;
+    var src = this.file.src;
+    var dest = this.file.dest;
+    var done = this.async();
 
     // If we have received an array, condense it
     // DEV: If there are multiple files, we cannot concatenate them since that requires buffering
@@ -71,6 +57,7 @@ module.exports = function (grunt) {
     });
   });
 
+  // Define a task for multiple files
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
     // Collect the filepaths we need
     var file = this.file,
@@ -128,10 +115,6 @@ module.exports = function (grunt) {
       done();
     });
   });
-
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
 
   // Register our curl helper
   grunt.registerHelper('curl', function (info, cb) {
