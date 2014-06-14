@@ -60,18 +60,9 @@ module.exports = function (grunt) {
   // Define a task for multiple files
   grunt.registerMultiTask('curl-dir', 'Download collections of files from the internet via grunt.', function () {
     // Collect the filepaths we need
-    var file = this.file,
-        src = file.src,
-        dest = file.dest,
-        data = this.data,
-        router = data.router || function defaultRouter (filepath) {
-          if (typeof filepath !== 'string') {
-            filepath = filepath.url || filepath.uri;
-          }
-          return path.basename(filepath);
-        },
-        done = this.async(),
-        that = this;
+    var src = this.file.src;
+    var dest = this.file.dest;
+    var done = this.async();
 
     // Upcast the srcFiles to an array
     var srcFiles = src;
@@ -89,6 +80,12 @@ module.exports = function (grunt) {
     }, []);
 
     // Determine the destinations
+    var router = this.data.router || function defaultRouter (filepath) {
+      if (typeof filepath !== 'string') {
+        filepath = filepath.url || filepath.uri;
+      }
+      return path.basename(filepath);
+    };
     var fileInfos = srcFiles.map(function getDest (srcFile, i) {
       // Route the file, append it to dest, and return
       var filepath = router(srcFile),
