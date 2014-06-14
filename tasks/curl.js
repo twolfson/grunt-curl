@@ -136,7 +136,14 @@ module.exports = function (grunt) {
           });
 
       // Iterate over each of the files
+      console.log('info');
+      fileInfos.forEach(function (fileInfo) {
+        fileInfo.res.on('end', function () {
+          console.log('non-async end');
+        });
+      });
       async.forEach(fileInfos, function writeCurlFiles (fileInfo, cb) {
+        console.log('iterate');
         // Create a directory for the content
         var destPath = fileInfo.destPath;
         var destDir = path.dirname(destPath);
@@ -144,20 +151,25 @@ module.exports = function (grunt) {
 
         // Write out the content and handle errors
         var res = fileInfo.res;
-        var writeStream = fs.createWriteStream(destPath, res);
+        console.log(destPath);
+        var writeStream = fs.createWriteStream(destPath);
         writeStream.on('error', cb);
         res.pipe(writeStream);
 
         // When the stream completes, callback
         res.on('end', cb);
       }, function handleCompletion (err) {
+        console.log('huh');
         // If there was an error, log and exit with it
         if (err) {
           grunt.fail.warn(err);
           return done();
         }
 
+        console.log('hai');
+
         // Otherwise, print a success message.
+        var destArr = _.pluck(fileInfos, 'destPath');
         grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
 
         // Callback
@@ -184,6 +196,7 @@ module.exports = function (grunt) {
     // On error, callback
     req.on('error', cb);
 
+console.log('requesting', params);
     // On response, callback for writing out the stream
     req.on('response', function handleResponse (res) {
       // Assert the statusCode was good
@@ -191,6 +204,11 @@ module.exports = function (grunt) {
       if (statusCode < 200 || statusCode >= 300) {
         return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode));
       }
+
+res.on('end', function () {
+  console.log('super early end');
+});
+
 
       // Otherwise, callback with the stream
       cb(null, res);
