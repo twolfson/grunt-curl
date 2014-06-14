@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.0.0 - Moved to streams for creating files, deprecated `helper`. Fixes #21
+
 1.5.1 - Added test for local `GET` in order to resolve #18 faster
 
 1.5.0 - Moved from `doubleshot` to `mocha` to make tests more canonical for contributors
