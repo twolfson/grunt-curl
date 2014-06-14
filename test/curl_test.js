@@ -18,7 +18,7 @@ describe('grunt curl', function () {
     });
   });
 
-  describe.only('downloading a POST file', function () {
+  describe('downloading a POST file', function () {
     serverUtils.runPostServer();
     gruntUtils.runTask('curl:post');
     fsUtils.readExpectedFile('post.txt', 'utf8');

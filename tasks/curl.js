@@ -16,41 +16,13 @@ module.exports = function (grunt) {
   // Load in grunt-retro
   grunt = gruntRetro(grunt);
 
-  // Define helper for downloading files
-  function curlFile(info, cb) {
-    // Default to a binary request
-    var options = info.src;
-    var dest = info.dest;
+  // Please see the grunt documentation for more information regarding task and
+  // helper creation: https://github.com/gruntjs/grunt/blob/master/docs/toc.md
 
-    console.log(options);
+  // ==========================================================================
+  // TASKS
+  // ==========================================================================
 
-    // Request the url
-    var req = request(options);
-
-    // On error, callback
-    req.on('error', cb);
-
-    // On response, callback for writing out the stream
-    req.on('response', function handleResponse (res) {
-      // Assert the statusCode was good
-      var statusCode = res.statusCode;
-      if (statusCode < 200 || statusCode >= 300) {
-        return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode));
-      }
-
-      // Otherwise, write out the content
-      var destdir = path.dirname(dest);
-      grunt.file.mkdir(destdir);
-      var writeStream = fs.createWriteStream(dest);
-      res.pipe(fs.createWriteStream(dest));
-
-      // When the stream errors or completes, exit
-      writeStream.on('error', cb);
-      writeStream.on('end', cb);
-    });
-  }
-
-  // Define tasks
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
     // Collect the filepaths we need
     var file = this.file,
@@ -81,7 +53,7 @@ module.exports = function (grunt) {
     }
 
     // Asynchronously fetch the file
-    curlFile({
+    grunt.helper('curl', {
       src: srcFile,
       dest: dest
     }, function handleCurlComplete (err) {
@@ -141,7 +113,7 @@ module.exports = function (grunt) {
     });
 
     // Asynchronously fetch the files in parallel
-    async.map(fileInfos, curlFile, function handleCurlResult (err) {
+    async.map(fileInfos, grunt.helper.bind(grunt, 'curl'), function handleCurlResult (err) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
@@ -154,6 +126,42 @@ module.exports = function (grunt) {
 
       // Callback
       done();
+    });
+  });
+
+  // ==========================================================================
+  // HELPERS
+  // ==========================================================================
+
+  // Register our curl helper
+  grunt.registerHelper('curl', function (info, cb) {
+    // Default to a binary request
+    var options = info.src;
+    var dest = info.dest;
+
+    // Request the url
+    var req = request(options);
+
+    // On error, callback
+    req.on('error', cb);
+
+    // On response, callback for writing out the stream
+    req.on('response', function handleResponse (res) {
+      // Assert the statusCode was good
+      var statusCode = res.statusCode;
+      if (statusCode < 200 || statusCode >= 300) {
+        return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode));
+      }
+
+      // Otherwise, write out the content
+      var destdir = path.dirname(dest);
+      grunt.file.mkdir(destdir);
+      var writeStream = fs.createWriteStream(dest);
+      res.pipe(fs.createWriteStream(dest));
+
+      // When the stream errors or completes, exit
+      writeStream.on('error', cb);
+      writeStream.on('end', cb);
     });
   });
 };
