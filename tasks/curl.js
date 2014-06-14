@@ -137,13 +137,18 @@ module.exports = function (grunt) {
 
       // Iterate over each of the files
       async.forEach(fileInfos, function writeCurlFiles (fileInfo, cb) {
-        // Write out the content
+        // Create a directory for the content
         var destPath = fileInfo.destPath;
         var destDir = path.dirname(destPath);
         grunt.file.mkdir(destDir);
-        var writeStream = fs.createWriteStream(destPath, content);
+
+        // Write out the content and handle errors
+        var res = fileInfo.res;
+        var writeStream = fs.createWriteStream(destPath, res);
         writeStream.on('error', cb);
         res.pipe(writeStream);
+
+        // When the stream completes, callback
         res.on('end', cb);
       }, function handleCompletion (err) {
         // If there was an error, log and exit with it
