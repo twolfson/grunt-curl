@@ -110,31 +110,66 @@ curl: {
 }
 ```
 
-  },
-  // Grab multiple files
-  'curl-dir': {
-    // Short format (dest folder: [src1, src2])
-    // These will be saved as 'location/to/save/files/file1.js'
-    //    and 'location/to/save/files/file2.js'
-    'location/to/save/files': [
+### `curl-dir`
+The `curl-dir` task is designed for downloading multiple files to the same directory.
+
+We support 2 configuration formats.
+
+#### Short format
+As with `curl`, we leverage `grunt's {dest: src}` format for our short format.
+
+```js
+'curl-dir': {
+  // Short format (dest folder: [src1, src2])
+  // These will be saved as 'location/to/save/files/file1.js'
+  //    and 'location/to/save/files/file2.js'
+  'location/to/save/files': [
+    'http://files.com/path/to/file1.js',
+    'http://generic.com/scripts/file2.js'
+  ]
+}
+```
+
+As with before, this can be executed via `grunt curl-dir` but will execute other tasks at the same level. To run this task standalone, it must be run via:
+
+```bash
+grunt curl-dir:location/to/save/files
+```
+
+#### Long format
+```js
+'curl-dir': {
+  'task-name': {
+    src: [
       'http://files.com/path/to/file1.js',
-      'http://generic.com/scripts/file2.js'
+      'http://files.com/path/to/file2.js'
     ],
+    dest: 'location/to/save/files'
+  }
+}
+```
 
-    // Long format
-    long: {
-      src: [
-        'http://files.com/path/to/file1.js',
-        'http://files.com/path/to/file2.js'
-      ],
-      dest: 'location/to/save/files'
-    },
+This task can be executed from the command line via
 
-    // src files will expand to same file1.js and file2.js as long format
-    braceExpansion: {
-      src: ['http://files.com/path/to/{file1,file2}.js'],
-      dest: 'location/to/save/files'
-    },
+```bash
+grunt curl-dir:task-name
+```
+
+#### Brace expansion
+`curl-dir` supports brace expansion for `src` in both formats.
+
+```js
+'curl-dir': {
+  'brace-expansion': {
+    src: ['http://files.com/path/to/{file1,file2}.js'],
+    // Expands to: [
+    //  'http://files.com/path/to/file1.js',
+    //  'http://files.com/path/to/file2.js'
+    // ]
+    dest: 'location/to/save/files'
+  }
+}
+```
 
     // Custom filepaths
     // This will save file1.js to location/to/save/files/path/to/file1.js
