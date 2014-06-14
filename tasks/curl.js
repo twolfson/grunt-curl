@@ -63,9 +63,16 @@ module.exports = function (grunt) {
       // Write out the content
       var destDir = path.dirname(dest);
       grunt.file.mkdir(destDir);
-      res.pipe(fs.createWriteStream(dest));
+      var writeStream = fs.createWriteStream(dest);
+
+      // If there is an error with the stream, exit
+      writeStream.on('error', function handleError (err) {
+        grunt.fai.warn(err);
+        return done();
+      });
 
       // When the stream completes, exit
+      res.pipe(fs.createWriteStream(dest));
       res.on('end', function finishWrite () {
         // Otherwise, print a success message.
         grunt.log.writeln('File "' + dest + '" created.');
