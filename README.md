@@ -171,34 +171,42 @@ grunt curl-dir:task-name
 }
 ```
 
-    // Custom filepaths
-    // This will save file1.js to location/to/save/files/path/to/file1.js
-    //    and file2.js to location/to/save/files/scripts/file2.js
-    customFilepaths: {
-      src: [
-        'http://files.com/path/to/file1.js',
-        'http://generic.com/scripts/file2.js'
-      ],
-      router: function (url) {
-        return url.replace('http://files.com/', '').replace('http://generic.com/', '');
-      },
-      dest: 'location/to/save/files'
-    },
+#### Filepath mapping
+URLs can be mapped to custom filepaths via the `router` option in the long format.
 
-    // Use any of request's options
-    custom: {
-      src: [{
-        url: 'http://files.com/path/to/file.js',
-        method: 'POST',
-        body: 'abc'
-      }],
-      dest: 'location/to/save/files'
-    }
+```js
+'curl-dir': {
+  'custom-filepaths': {
+    src: [
+      'http://files.com/path/to/file1.js',
+      'http://generic.com/scripts/file2.js'
+    ],
+    router: function (url) {
+      // Save `file1.js` to 'location/to/save/files/hello/world/file1.js'
+      // and `file2.js` to 'location/to/save/files/goodbye/moon/file2.js'
+      var filepath = url.replace('http://files.com/path/to', 'hello/world');
+      return url.replace('http://generic.com/scripts', 'goodbye/moon');
+    },
+    dest: 'location/to/save/files'
   }
-}):
+}
 ```
 
-[request]: https://github.com/mikeal/request
+#### Using request options
+As demonstrated in `curl`, we can use [`request`][] options to leverage special HTTP actions (e.g. make a `POST` request).
+
+```js
+'curl-dir': {
+  custom: {
+    src: [{
+      url: 'http://files.com/path/to/file.js',
+      method: 'POST',
+      body: 'abc'
+    }],
+    dest: 'location/to/save/files'
+  }
+}
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`.
