@@ -54,7 +54,11 @@ The `curl` task is intended for downloading single files which may require speci
 
 We support 2 different formats for configuration.
 
-#### Short format `{dest: src}`
+#### Short format
+The short format relies on [`grunt's` support of `{dest: src}`][grunt-short-format]
+
+[grunt-short-format]: http://gruntjs.com/configuring-tasks#older-formats
+
 ```js
 curl: {
   'location/to/download/file.js': 'http://files.com/path/to/file.js'
