@@ -35,35 +35,76 @@ Now, we can run our task:
 
 ```bash
 $ grunt curl
+Running "curl:location/to/download/github.html" (curl) task
+File "location/to/download/github.html" created.
 
+Done, without errors.
 ```
 
 ## Documentation
-`grunt-curl` retrieves data via [request][request] and writes it to file.
+`grunt-curl` creates 2 `grunt` tasks for you to use/configure, `curl` and `curl-dir`. Both tasks support accepting [`request`] parameters as a `src` file.
 
-We register two grunt tasks
+[Example: This allows for `POST` requests and such.][post-example].
+
+[post-example]: TODO: Add me
+
+### `curl`
+The `curl` task is intended for downloading single files which may require special parameters.
+
+We support 2 different formats for configuration.
+
+#### Short format `{dest: src}`
 ```js
-grunt.initConfig({
-  // Grab single files
-  curl: {
-    // Short format (dest: src)
-    'location/to/download/file.js': 'http://files.com/path/to/file.js',
+curl: {
+  'location/to/download/file.js': 'http://files.com/path/to/file.js'
+}
+```
 
-    // Long format
-    long: {
-      src: 'http://files.com/path/to/file.js',
-      dest: 'location/to/download/file.js'
+This format is suggested only if you don't need to run `curl` tasks separately
+
+```js
+grunt curl
+```
+
+If you want to run this task standalone, it must be executed via:
+
+```js
+grunt curl:dest
+# grunt curl:location/to/download/file.js
+```
+
+#### Long format
+```js
+curl: {
+  'task-name': {
+    src: 'http://files.com/path/to/file.js',
+    dest: 'location/to/download/file.js'
+  }
+}
+```
+
+This can be run standalone via
+
+```js
+grunt curl:task-name
+```
+
+##### Long format with request options
+This is an example of the long format leveraging [`request`][] parameters for making a `POST` request.
+
+```js
+curl: {
+  'task-name': {
+    src: {
+      url: 'http://files.com/path/to/file.js',
+      method: 'POST',
+      body: 'abc'
     },
+    dest: 'location/to/download/file.js'
+  }
+}
+```
 
-    // Use any of request's options
-    custom: {
-      src: {
-        url: 'http://files.com/path/to/file.js',
-        method: 'POST',
-        body: 'abc'
-      },
-      dest: 'location/to/download/file.js'
-    }
   },
   // Grab multiple files
   'curl-dir': {
