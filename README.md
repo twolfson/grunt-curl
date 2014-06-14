@@ -7,7 +7,7 @@ Install this grunt plugin next to your project's [grunt.js gruntfile][getting_st
 
 Then add this line to your project's `grunt.js` gruntfile:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-curl');
 ```
 
@@ -91,13 +91,6 @@ grunt.initConfig({
     }
   }
 }):
-```
-
-and a grunt helper
-```js
-grunt.helper('curl', url, function handleData (err, content) {
-  // Handle error and use content
-});
 ```
 
 [request]: https://github.com/mikeal/request
