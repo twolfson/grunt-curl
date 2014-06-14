@@ -113,6 +113,7 @@ module.exports = function (grunt) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
+        return done();
       }
 
       // Determine the destinations
@@ -128,19 +129,28 @@ module.exports = function (grunt) {
           });
 
       // Iterate over each of the files
-      async.forEach(files, function writeCurlFiles (res, cb) {
+      async.forEach(fileInfos, function writeCurlFiles (fileInfo, cb) {
         // Write out the content
+        var destPath = fileInfo.destPath;
         var destDir = path.dirname(destPath);
         grunt.file.mkdir(destDir);
-        res.pipe
-        fs.writeFileSync(destPath, content, 'binary');
+        var writeStream = fs.createWriteStream(destPath, content);
+        writeStream.on('error', cb);
+        res.pipe(writeStream);
+        res.on('end', cb);
+      }, function handleCompletion (err) {
+        // If there was an error, log and exit with it
+        if (err) {
+          grunt.fail.warn(err);
+          return done();
+        }
+
+        // Otherwise, print a success message.
+        grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
+
+        // Callback
+        done();
       });
-
-      // Otherwise, print a success message.
-      grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
-
-      // Callback
-      done();
     }
   });
 
