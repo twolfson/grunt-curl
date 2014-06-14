@@ -141,18 +141,21 @@ module.exports = function (grunt) {
     var params = _.extend({'encoding': 'binary'}, options);
 
     // Request the url
-    request(params, function (err, res, body) {
-      // If there was response, assert the statusCode was good
-      if (res) {
-        var statusCode = res.statusCode;
-        if (statusCode < 200 || statusCode >= 300) {
-          err = new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode);
-        }
+    var req = request(params);
+
+    // On error, callback
+    req.on('error', cb);
+
+    // On response, callback for writing out the stream
+    req.on('response', function handleResponse (res) {
+      // Assert the statusCode was good
+      var statusCode = res.statusCode;
+      if (statusCode < 200 || statusCode >= 300) {
+        return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode));
       }
 
-      // Callback with the error and body
-      cb(err, body);
+      // Otherwise, callback with the stream
+      cb(null, res);
     });
   });
-
 };
