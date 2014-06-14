@@ -46,6 +46,7 @@ Done, without errors.
 
 [Example: This allows for `POST` requests and such.][post-example].
 
+[`request`]: https://github.com/mikeal/request
 [post-example]: TODO: Add me
 
 ### `curl`
@@ -89,7 +90,7 @@ This can be run standalone via
 grunt curl:task-name
 ```
 
-##### Long format with request options
+#### Using request options
 This is an example of the long format leveraging [`request`][] parameters for making a `POST` request.
 
 ```js
