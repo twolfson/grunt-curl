@@ -1,18 +1,40 @@
 # grunt-curl [![Build status](https://travis-ci.org/twolfson/grunt-curl.png?branch=master)](https://travis-ci.org/twolfson/grunt-curl)
 
-Download files from the internet via grunt.
+Download files from the internet via [grunt][].
 
-## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-curl`
+This was created as for dependency management via `grunt-curl` and `grunt-zip` as a low-tech alternative to `bower` and similar solutions.
 
-Then add this line to your project's `grunt.js` gruntfile:
-
-```js
-grunt.loadNpmTasks('grunt-curl');
-```
+http://twolfson.com/2014-01-19-low-tech-dependency-management-via-grunt-tasks
 
 [grunt]: http://gruntjs.com/
-[getting_started]: https://github.com/gruntjs/grunt/blob/master/docs/getting_started.md
+
+## Getting Started
+`grunt-curl` can be installed via npm: `npm install grunt-curl`
+
+Then, add and configure the it in your grunt file:
+
+```js
+module.exports = function (grunt) {
+  // Configure `curl` with URLs
+  // If you would like to download multiple files
+  // to the same directory, there is `curl-dir`
+  grunt.initConfig({
+    curl: {
+      'location/to/download/github.html': 'http://github.com/',
+    }
+  });
+
+  // Load in `grunt-curl`
+  grunt.loadNpmTasks('grunt-curl');
+};
+```
+
+Now, we can run our task:
+
+```bash
+$ grunt curl
+
+```
 
 ## Documentation
 `grunt-curl` retrieves data via [request][request] and writes it to file.
