@@ -47,7 +47,7 @@ Done, without errors.
 [Example: This allows for `POST` requests and such.][post-example].
 
 [`request`]: https://github.com/mikeal/request
-[post-example]: TODO: Add me
+[post-example]: #using-request-options
 
 ### `curl`
 The `curl` task is intended for downloading single files which may require special parameters.
