@@ -73,7 +73,7 @@ grunt curl
 
 If you want to run this task standalone, it must be executed via:
 
-```js
+```bash
 grunt curl:dest
 # grunt curl:location/to/download/file.js
 ```
@@ -90,7 +90,7 @@ curl: {
 
 This can be run standalone via
 
-```js
+```bash
 grunt curl:task-name
 ```
 
