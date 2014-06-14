@@ -35,7 +35,8 @@ module.exports = function (grunt) {
     // If we have received an array, condense it
     // DEV: If there are multiple files, we cannot concatenate them since that requires buffering
     // DEV: which creates issues with large files. As a result, do not allow multiple files.
-    var srcFiles = src;
+    var srcFile = src;
+    var srcFiles = srcFile;
     if (Array.isArray(srcFiles)) {
       // If there were no files found, be informative
       if (srcFiles.length === 0) {
@@ -46,8 +47,10 @@ module.exports = function (grunt) {
         grunt.fail.warn('Too many source files received. Expected: 1, Actual: ' + srcFiles.length + '. Stopping `grunt-curl` early.');
         return done();
       }
+
+      // Collapse first element
+      srcFile = srcFiles[0];
     }
-    var srcFile = srcFiles[0];
 
     // Asynchronously fetch the files in parallel
     grunt.helper('curl', srcFile, function curlResultFn (err, res) {
