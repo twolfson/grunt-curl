@@ -116,9 +116,9 @@ As with `curl`, we leverage `grunt's {dest: src}` format for our short format.
 
 ```js
 'curl-dir': {
-  // Short format (dest folder: [src1, src2])
-  // These will be saved as 'location/to/save/files/file1.js'
-  //    and 'location/to/save/files/file2.js'
+  // These will be saved as:
+  // 'location/to/save/files/file1.js' and
+  // 'location/to/save/files/file2.js'
   'location/to/save/files': [
     'http://files.com/path/to/file1.js',
     'http://generic.com/scripts/file2.js'
