@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.0.2 - Updated README
+
 2.0.1 - Fixed regression with exiting early and bad event listener
 
 2.0.0 - Moved to streams for creating files, deprecated `helper`. Fixes #21
