@@ -22,6 +22,8 @@ module.exports = function (grunt) {
     var options = info.src;
     var dest = info.dest;
 
+    console.log(options);
+
     // Request the url
     var req = request(options);
 
@@ -40,16 +42,15 @@ module.exports = function (grunt) {
       var destdir = path.dirname(dest);
       grunt.file.mkdir(destdir);
       var writeStream = fs.createWriteStream(dest);
-
-      // If there is an error with the stream, exit
-      writeStream.on('error', cb);
-
-      // When the stream completes, exit
       res.pipe(fs.createWriteStream(dest));
-      res.on('end', cb);
+
+      // When the stream errors or completes, exit
+      writeStream.on('error', cb);
+      writeStream.on('end', cb);
     });
   }
 
+  // Define tasks
   grunt.registerMultiTask('curl', 'Download files from the internet via grunt.', function () {
     // Collect the filepaths we need
     var file = this.file,
