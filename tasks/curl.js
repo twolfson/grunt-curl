@@ -109,26 +109,30 @@ module.exports = function (grunt) {
     // Asynchronously fetch the files in parallel
     async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
 
-    function curlResultFn(err, files) {
+    function curlResultFn(err, resArr) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
       }
 
       // Determine the destinations
-      var destArr = srcFiles.map(function getDest (srcFile) {
+      var fileInfos = srcFiles.map(function getDest (srcFile, i) {
             // Route the file, append it to dest, and return
             var filepath = router(srcFile),
                 retStr = path.join(dest, filepath);
-            return retStr;
+            return {
+              srcFile: srcFile,
+              destPath: retStr,
+              res: resArr[i]
+            };
           });
 
       // Iterate over each of the files
-      files.forEach(function curlWriteFiles (content, i) {
+      async.forEach(files, function writeCurlFiles (res, cb) {
         // Write out the content
-        var destPath = destArr[i],
-            destDir = path.dirname(destPath);
+        var destDir = path.dirname(destPath);
         grunt.file.mkdir(destDir);
+        res.pipe
         fs.writeFileSync(destPath, content, 'binary');
       });
 
