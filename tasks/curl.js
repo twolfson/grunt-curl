@@ -101,69 +101,32 @@ module.exports = function (grunt) {
       return retArr;
     }, []);
 
-    // Asynchronously fetch the files in parallel
-    async.map(srcFiles, grunt.helper.bind(grunt, 'curl'), curlResultFn);
+    // Determine the destinations
+    var fileInfos = srcFiles.map(function getDest (srcFile, i) {
+      // Route the file, append it to dest, and return
+      var filepath = router(srcFile),
+          retStr = path.join(dest, filepath);
+      return {
+        src: srcFile,
+        dest: retStr
+      };
+    });
 
-    function curlResultFn(err, resArr) {
+    // Asynchronously fetch the files in parallel
+    async.map(fileInfos, grunt.helper.bind(grunt, 'curl'), function handleCurlResult (err) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
         return done();
       }
 
-      // Determine the destinations
-      var fileInfos = srcFiles.map(function getDest (srcFile, i) {
-            // Route the file, append it to dest, and return
-            var filepath = router(srcFile),
-                retStr = path.join(dest, filepath);
-            return {
-              srcFile: srcFile,
-              destPath: retStr,
-              res: resArr[i]
-            };
-          });
+      // Otherwise, print a success message.
+      var destArr = _.pluck(fileInfos, 'dest');
+      grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
 
-      // Iterate over each of the files
-      console.log('info');
-      fileInfos.forEach(function (fileInfo) {
-        fileInfo.res.on('end', function () {
-          console.log('non-async end');
-        });
-      });
-      async.forEach(fileInfos, function writeCurlFiles (fileInfo, cb) {
-        console.log('iterate');
-        // Create a directory for the content
-        var destPath = fileInfo.destPath;
-        var destDir = path.dirname(destPath);
-        grunt.file.mkdir(destDir);
-
-        // Write out the content and handle errors
-        var res = fileInfo.res;
-        console.log(destPath);
-        var writeStream = fs.createWriteStream(destPath);
-        writeStream.on('error', cb);
-        res.pipe(writeStream);
-
-        // When the stream completes, callback
-        res.on('end', cb);
-      }, function handleCompletion (err) {
-        console.log('huh');
-        // If there was an error, log and exit with it
-        if (err) {
-          grunt.fail.warn(err);
-          return done();
-        }
-
-        console.log('hai');
-
-        // Otherwise, print a success message.
-        var destArr = _.pluck(fileInfos, 'destPath');
-        grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
-
-        // Callback
-        done();
-      });
-    }
+      // Callback
+      done();
+    });
   });
 
   // ==========================================================================
@@ -175,13 +138,9 @@ module.exports = function (grunt) {
     // Default to a binary request
     var options = info.src;
     var dest = info.dest;
-    if (typeof options === 'string') {
-      options = {'url': options};
-    }
-    var params = _.extend({'encoding': 'binary'}, options);
 
     // Request the url
-    var req = request(params);
+    var req = request(options);
 
     // On error, callback
     req.on('error', cb);
