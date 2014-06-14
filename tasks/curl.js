@@ -137,11 +137,11 @@ module.exports = function (grunt) {
       var destdir = path.dirname(dest);
       grunt.file.mkdir(destdir);
       var writeStream = fs.createWriteStream(dest);
-      res.pipe(fs.createWriteStream(dest));
+      res.pipe(writeStream);
 
       // When the stream errors or completes, exit
       writeStream.on('error', cb);
-      writeStream.on('end', cb);
+      writeStream.on('close', cb);
     });
   });
 };
