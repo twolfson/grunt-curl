@@ -42,17 +42,15 @@ Done, without errors.
 ```
 
 ## Documentation
-`grunt-curl` creates 2 `grunt` tasks for you to use/configure, `curl` and `curl-dir`. Both tasks support accepting [`request`] parameters as a `src` file.
+`grunt-curl` creates 2 `grunt` tasks for you to use/configure, `curl` and `curl-dir`. `curl` is designed for downloading single files at a time. `curl-dir` is designed for downloading multiple files to a common directory.
 
-[Example: This allows for `POST` requests and such.][post-example].
+Both tasks support accepting [`request`] parameters as a `src` file. [Here is an example creating a `POST` request][post-example].
 
 [`request`]: https://github.com/mikeal/request
 [post-example]: #using-request-options
 
 ### `curl`
-The `curl` task is intended for downloading single files which may require special parameters.
-
-We support 2 different formats for configuration.
+We support 2 different formats for configuring `curl`.
 
 #### Short format
 The short format relies on [`grunt's` support of `{dest: src}`][grunt-short-format]
@@ -111,9 +109,7 @@ curl: {
 ```
 
 ### `curl-dir`
-The `curl-dir` task is designed for downloading multiple files to the same directory.
-
-We support 2 configuration formats.
+`curl-dir` supports 2 configuration formats.
 
 #### Short format
 As with `curl`, we leverage `grunt's {dest: src}` format for our short format.
