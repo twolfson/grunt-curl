@@ -52,34 +52,22 @@ module.exports = function (grunt) {
       srcFile = srcFiles[0];
     }
 
-    // Asynchronously fetch the files in parallel
-    grunt.helper('curl', srcFile, function curlResultFn (err, res) {
+    // Asynchronously fetch the file
+    grunt.helper('curl', {
+      src: srcFile,
+      dest: dest
+    }, function handleCurlComplete (err) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
         return done();
       }
 
-      // Write out the content
-      var destDir = path.dirname(dest);
-      grunt.file.mkdir(destDir);
-      var writeStream = fs.createWriteStream(dest);
+      // Otherwise, print a success message.
+      grunt.log.writeln('File "' + dest + '" created.');
 
-      // If there is an error with the stream, exit
-      writeStream.on('error', function handleError (err) {
-        grunt.fai.warn(err);
-        return done();
-      });
-
-      // When the stream completes, exit
-      res.pipe(fs.createWriteStream(dest));
-      res.on('end', function finishWrite () {
-        // Otherwise, print a success message.
-        grunt.log.writeln('File "' + dest + '" created.');
-
-        // Callback
-        done();
-      });
+      // Callback
+      done();
     });
   });
 
@@ -183,8 +171,10 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Register our curl helper
-  grunt.registerHelper('curl', function (options, cb) {
+  grunt.registerHelper('curl', function (params, cb) {
     // Default to a binary request
+    var options = params.src;
+    var dest = params.dest;
     if (typeof options === 'string') {
       options = {'url': options};
     }
@@ -196,7 +186,6 @@ module.exports = function (grunt) {
     // On error, callback
     req.on('error', cb);
 
-console.log('requesting', params);
     // On response, callback for writing out the stream
     req.on('response', function handleResponse (res) {
       // Assert the statusCode was good
@@ -205,13 +194,17 @@ console.log('requesting', params);
         return cb(new Error('Fetching ' + JSON.stringify(options) + ' failed with HTTP status code ' + statusCode));
       }
 
-res.on('end', function () {
-  console.log('super early end');
-});
+      // Otherwise, write out the content
+      var destdir = path.dirname(dest);
+      grunt.file.mkdir(destdir);
+      var writeStream = fs.createWriteStream(dest);
 
+      // If there is an error with the stream, exit
+      writeStream.on('error', cb);
 
-      // Otherwise, callback with the stream
-      cb(null, res);
+      // When the stream completes, exit
+      res.pipe(fs.createWriteStream(dest));
+      res.on('end', cb);
     });
   });
 };
