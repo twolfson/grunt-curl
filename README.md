@@ -2,11 +2,13 @@
 
 Download files from the internet via [grunt][].
 
-This was created as for dependency management via `grunt-curl` and `grunt-zip` as a low-tech alternative to `bower` and similar solutions.
+This was created for dependency management via [`grunt-curl`][] and [`grunt-zip`][] as a low-tech alternative to `bower` and similar solutions.
 
 http://twolfson.com/2014-01-19-low-tech-dependency-management-via-grunt-tasks
 
 [grunt]: http://gruntjs.com/
+[`grunt-curl`]: https://github.com/twolfson/grunt-curl
+[`grunt-zip`]: https://github.com/twolfson/grunt-zip
 
 ## Getting Started
 `grunt-curl` can be installed via npm: `npm install grunt-curl`
