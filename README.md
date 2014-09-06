@@ -204,6 +204,22 @@ As demonstrated in `curl`, we can use [`request`][] options to leverage special 
 }
 ```
 
+## Examples
+### Using a proxy
+Using [`request`][] options we can add a proxy to our requests
+
+```js
+curl: {
+  custom: {
+    src: {
+      url: 'http://google.com',
+      proxy: 'http://127.0.0.1:9001/'
+    },
+    dest: 'google.html'
+  }
+}
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`.
 
