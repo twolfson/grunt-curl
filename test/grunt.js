@@ -48,6 +48,14 @@ module.exports = function (grunt) {
         ],
         dest: 'actual/multi'
       },
+      multi_ifMissing: {
+        ifMissing: true,
+        src: [
+          'http://cdnjs.cloudflare.com/ajax/libs/labjs/2.0.3/LAB.min.js',
+          'http://cdnjs.cloudflare.com/ajax/libs/cookiejar/0.5/cookiejar.js'
+        ],
+        dest: 'actual/multi_ifMissing'
+      },
       braceExpansion: {
         src: [
           'http://cdnjs.cloudflare.com/ajax/libs/{labjs/2.0.3/LAB.min,cookiejar/0.5/cookiejar}.js'

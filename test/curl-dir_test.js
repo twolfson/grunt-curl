@@ -30,6 +30,31 @@ describe('grunt curl-dir', function () {
     });
   });
 
+  describe('downloading multiple files multiple times', function () {
+    gruntUtils.runTask('curl-dir:multi_ifMissing');
+    gruntUtils.runTask('curl-dir:multi_ifMissing');
+
+    describe('the first file', function () {
+      fsUtils.readExpectedFile('multi/LAB.min.js', 'utf8');
+      fsUtils.readActualFile('multi/LAB.min.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
+    });
+
+    describe('the second file', function () {
+      fsUtils.readExpectedFile('multi/cookiejar.js', 'utf8');
+      fsUtils.readActualFile('multi/cookiejar.js', 'utf8');
+
+      it('is successfully downloaded', function () {
+        expect(this.err).to.equal(null);
+        expect(this.actualContent).to.equal(this.expectedContent);
+      });
+    });
+  });
+
   describe('downloading brace expanded files', function () {
     gruntUtils.runTask('curl-dir:braceExpansion');
 
