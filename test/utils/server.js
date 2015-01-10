@@ -37,16 +37,18 @@ exports.runGzipServer = function () {
   before(function startServer () {
     var server = express();
     server.get('/gzip.txt', function (req, res) {
+      // Guarantee gzip response *always*
+      res.setHeader('Content-Encoding', 'gzip');
+
       // Take the query, stringify it, gzip it, and send it back
       var queryJson = JSON.stringify(req.query);
-      zlib.gzip(query, function handleGzippedContent (err, gzipData) {
+      zlib.gzip(queryJson, function handleGzippedContent (err, gzipData) {
         // If there was an error, throw it
         if (err) {
           throw err;
         }
 
-        // Otherwise, send it back with the proper header
-        res.writeHeader('Content-Encoding: gzip');
+        // Otherwise, send back our gzipped content
         res.send(gzipData);
       });
 
