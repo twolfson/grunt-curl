@@ -41,7 +41,7 @@ exports.runGzipServer = function () {
       res.setHeader('Content-Encoding', 'gzip');
 
       // Take the query, stringify it, gzip it, and send it back
-      var queryJson = JSON.stringify(req.query);
+      var queryJson = JSON.stringify(req.query, null, 2);
       zlib.gzip(queryJson, function handleGzippedContent (err, gzipData) {
         // If there was an error, throw it
         if (err) {
