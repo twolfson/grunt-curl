@@ -55,8 +55,8 @@ describe('grunt curl', function () {
   describe('downloading a gzipped file', function () {
     gruntUtils.runTask('curl:gzip');
     serverUtils.runGzipServer();
-    fsUtils.readExpectedFile('file.txt');
-    fsUtils.readActualFile('file.txt');
+    fsUtils.readExpectedFile('gzip.txt');
+    fsUtils.readActualFile('gzip.txt');
 
     it('decodes the content', function () {
       expect(this.err).to.equal(null);

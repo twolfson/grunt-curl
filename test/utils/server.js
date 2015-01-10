@@ -36,8 +36,8 @@ exports.runGzipServer = function () {
   var _server;
   before(function startServer () {
     var server = express();
-    server.get('/file.txt', connectGzip.gzip(), function (req, res) {
-      res.send(req.body);
+    server.get('/gzip.txt', connectGzip.gzip(), function (req, res) {
+      res.send(req.query);
     });
     _server = server.listen(4000);
   });

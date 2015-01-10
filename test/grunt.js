@@ -31,6 +31,16 @@ module.exports = function (grunt) {
         },
         dest: 'actual/post.txt'
       },
+      gzip: {
+        src: {
+          url: 'http://localhost:4000/post.txt',
+          gzip: true,
+          qs: {
+            hello: 'world'
+          }
+        },
+        dest: 'actual/gzip.txt'
+      },
       nonExistingDomain: {
         src: 'http://nonexistent--foo--domain',
         dest: 'actual/nonexistent-domain'
