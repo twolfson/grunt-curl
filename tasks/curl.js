@@ -137,7 +137,10 @@ module.exports = function (grunt) {
       var destdir = path.dirname(dest);
       grunt.file.mkdir(destdir);
       var writeStream = fs.createWriteStream(dest);
-      res.pipe(writeStream);
+      // Use `req` as the source of data https://github.com/request/request/blob/v2.51.1/request.js#L1255-L1267
+      // DEV: This is to pipe out gunzipped data
+      var dataStream = req;
+      dataStream.pipe(writeStream);
 
       // When the stream errors or completes, exit
       writeStream.on('error', cb);
