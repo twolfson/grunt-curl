@@ -52,7 +52,7 @@ describe('grunt curl', function () {
     });
   });
 
-  describe.only('downloading a gzipped file', function () {
+  describe('downloading a gzipped file', function () {
     serverUtils.runGzipServer();
     gruntUtils.runTask('curl:gzip');
     fsUtils.readExpectedFile('gzip.txt', 'utf8');
