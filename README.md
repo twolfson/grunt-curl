@@ -13,7 +13,7 @@ http://twolfson.com/2014-01-19-low-tech-dependency-management-via-grunt-tasks
 ## Getting Started
 `grunt-curl` can be installed via npm: `npm install grunt-curl`
 
-Then, add and configure the it in your grunt file:
+Then, add and configure it in your grunt file:
 
 ```js
 module.exports = function (grunt) {
@@ -65,7 +65,7 @@ curl: {
 
 This format is suggested only if you don't need to run `curl` tasks separately
 
-```js
+```bash
 grunt curl
 ```
 
