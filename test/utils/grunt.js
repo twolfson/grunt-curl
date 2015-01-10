@@ -11,7 +11,6 @@ exports.runTask = function (task) {
     var that = this;
     this.timeout(5000);
     exec(quote(['grunt', task]), function (err, stdout, stderr) {
-      console.log(err + '', stdout, stderr);
       // Save results for later
       that.err = err;
       that.stdout = stdout;
