@@ -1,5 +1,5 @@
 // Load in depednecies
-var connectGzip = require('connect-gzip');
+var zlib = require('zlib');
 var express = require('express');
 
 // Create a server for GET data
@@ -36,8 +36,20 @@ exports.runGzipServer = function () {
   var _server;
   before(function startServer () {
     var server = express();
-    server.get('/gzip.txt', connectGzip.gzip(), function (req, res) {
-      res.send(req.query);
+    server.get('/gzip.txt', function (req, res) {
+      // Take the query, stringify it, gzip it, and send it back
+      var queryJson = JSON.stringify(req.query);
+      zlib.gzip(query, function handleGzippedContent (err, gzipData) {
+        // If there was an error, throw it
+        if (err) {
+          throw err;
+        }
+
+        // Otherwise, send it back with the proper header
+        res.writeHeader('Content-Encoding: gzip');
+        res.send(gzipData);
+      });
+
     });
     _server = server.listen(4000);
   });
