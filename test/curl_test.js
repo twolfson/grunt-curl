@@ -52,6 +52,18 @@ describe('grunt curl', function () {
     });
   });
 
+  describe('downloading a gzipped file', function () {
+    gruntUtils.runTask('curl:gzip');
+    serverUtils.runGzipServer();
+    fsUtils.readExpectedFile('file.txt');
+    fsUtils.readActualFile('file.txt');
+
+    it('decodes the content', function () {
+      expect(this.err).to.equal(null);
+      expect(this.actualContent).to.equal(this.expectedContent);
+    });
+  });
+
   describe('downloading a file from an invalid domain', function () {
     gruntUtils.runTask('curl:nonExistingDomain');
     fsUtils.exists('actual/nonexistent-domain');
