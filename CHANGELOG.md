@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.1.0 - Added support for decoding `gzipped` content via `gzip: true` request option
+
 2.0.3 - Added example for using a `proxy`
 
 2.0.2 - Updated README
