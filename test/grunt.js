@@ -33,7 +33,7 @@ module.exports = function (grunt) {
       },
       gzip: {
         src: {
-          url: 'http://localhost:4000/post.txt',
+          url: 'http://localhost:4000/gzip.txt',
           gzip: true,
           qs: {
             hello: 'world'
