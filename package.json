@@ -30,10 +30,10 @@
     "test": "rm -r test/actual 2> /dev/null; mocha"
   },
   "dependencies": {
-    "request": "~2.33.0",
-    "grunt-retro": "~0.7.0",
     "async": "~0.2.10",
-    "lodash": "~2.4.1"
+    "grunt-retro": "~0.7.0",
+    "lodash": "~2.4.1",
+    "request": "~2.51.0"
   },
   "_devDependencies": {
     "grunt": "~0.3.17",
