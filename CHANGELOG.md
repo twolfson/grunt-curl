@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.2.0 - Upgraded to `request@2.54.0` to fix security flaw via @duereg in #31
+
 2.1.1 - Fixed Travis CI configuration
 
 2.1.0 - Added support for decoding `gzipped` content via `gzip: true` request option
