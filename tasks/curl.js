@@ -96,8 +96,25 @@ module.exports = function (grunt) {
       };
     });
 
-    // Asynchronously fetch the files in parallel
-    async.map(fileInfos, grunt.helper.bind(grunt, 'curl'), function handleCurlResult (err) {
+    var ifMissing = this.data.ifMissing === true;
+    async.waterfall([
+      function filter (callback) {
+        if (!ifMissing) {
+          return callback(null, fileInfos);
+        }
+
+        function exists (fileInfo, callback) {
+          fs.exists(fileInfo.dest, callback);
+        }
+        async.rejectSeries(fileInfos, exists, function (fileInfos) {
+          callback(null, fileInfos);
+        });
+      },
+      function fetch (fileInfos, callback) {
+        // Asynchronously fetch the files in parallel
+        async.map(fileInfos, grunt.helper.bind(grunt, 'curl'), callback);
+      }
+    ], function handleCurlResult (err) {
       // If there is an error, fail
       if (err) {
         grunt.fail.warn(err);
