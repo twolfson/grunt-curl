@@ -220,6 +220,25 @@ curl: {
 }
 ```
 
+### Using an authentication
+Using [`request`][] options we can add an authentication to our requests
+
+```js
+curl: {
+  custom: {
+    src: {
+      url: 'http://secureserver.com/members',
+      auth: {
+        user: 'user',
+        pass: 'mdp'
+      }
+    },
+    dest: 'member.html'
+  }
+}
+
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`.
 
