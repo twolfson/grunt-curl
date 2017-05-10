@@ -212,7 +212,7 @@ Using [`request`][] options we can add a proxy to our requests
 curl: {
   custom: {
     src: {
-      url: 'http://google.com',
+      url: 'http://google.com/',
       proxy: 'http://127.0.0.1:9001/'
     },
     dest: 'google.html'
@@ -220,8 +220,8 @@ curl: {
 }
 ```
 
-### Using an authentication
-Using [`request`][] options we can add an authentication to our requests
+### Using authentication
+Using [`request`][] options we can add authentication to our requests
 
 ```js
 curl: {
@@ -229,14 +229,13 @@ curl: {
     src: {
       url: 'http://secureserver.com/members',
       auth: {
-        user: 'user',
-        pass: 'mdp'
+        user: 'my-username',
+        pass: 'my-password'
       }
     },
-    dest: 'member.html'
+    dest: 'secure.html'
   }
 }
-
 ```
 
 ## Contributing
