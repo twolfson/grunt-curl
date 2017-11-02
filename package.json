@@ -33,7 +33,7 @@
     "async": "~0.2.10",
     "grunt-retro": "~0.7.0",
     "lodash": "~2.4.1",
-    "request": "~2.54.0"
+    "request": "~2.83.0"
   },
   "_devDependencies": {
     "grunt": "~0.3.17",
