@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.4.0 - Upgraded to `request@2.83.0` to fix security flaw via @maxcutler in #40
+
 2.3.1 - Fixed Travis CI configuration
 
 2.3.0 - Added foundry for releases
