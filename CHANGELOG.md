@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.3.0 - Added foundry for releases
+
 2.2.1 - Added authentication example via @lynchmaniac in #39
 
 2.2.0 - Upgraded to `request@2.54.0` to fix security flaw via @duereg in #31
