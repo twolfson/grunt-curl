@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.3.1 - Fixed Travis CI configuration
+
 2.3.0 - Added foundry for releases
 
 2.2.1 - Added authentication example via @lynchmaniac in #39
