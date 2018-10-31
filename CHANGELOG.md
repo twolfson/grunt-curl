@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.4.2 - Upgraded to `express@3.21.2` to fix GitHub vulnerability warning
+
 2.4.1 - Replaced Gittip with support me page
 
 2.4.0 - Upgraded to `request@2.83.0` to fix security flaw via @maxcutler in #40
