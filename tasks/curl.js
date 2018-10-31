@@ -105,7 +105,7 @@ module.exports = function (grunt) {
       }
 
       // Otherwise, print a success message.
-      var destArr = _.pluck(fileInfos, 'dest');
+      var destArr = _.map(fileInfos, 'dest');
       grunt.log.writeln('Files "' + destArr.join('", "') + '" created.');
 
       // Callback
