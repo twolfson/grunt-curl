@@ -1,4 +1,6 @@
 # grunt-curl changelog
+2.5.0 - Upgraded to `lodash@4` to fix GitHub vulnerability warning
+
 2.4.2 - Upgraded to `express@3.21.2` to fix GitHub vulnerability warning
 
 2.4.1 - Replaced Gittip with support me page
